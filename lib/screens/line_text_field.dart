@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:apispec/core/presentation/line_text_field_screen.dart';
+import 'package:apispec/screens//line_text_field_screen.dart';
+import 'package:apispec/global.dart' as g;
 
 class LineTextField extends StatelessWidget {
   const LineTextField({super.key});
@@ -15,7 +16,7 @@ class LineTextField extends StatelessWidget {
         ),
         textTheme: Typography.whiteCupertino.copyWith(
           bodyMedium: const TextStyle(
-            fontFamily: 'MesloLGS NF', // Use a monospaced font
+            fontFamily: g.mainFont, // Use a monospaced font
             color: Colors.white,
             fontSize: 13.0,
           ),

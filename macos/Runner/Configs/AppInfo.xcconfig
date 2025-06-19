@@ -5,10 +5,10 @@
 // 'flutter create' template.
 
 // The application's name. By default this is also the title of the Flutter window.
-PRODUCT_NAME = apispec
+PRODUCT_NAME = API Spec
 
 // The application's bundle identifier
-PRODUCT_BUNDLE_IDENTIFIER = cc.peepapat.nocode.apispec.apispec
+PRODUCT_BUNDLE_IDENTIFIER = cc.peepapat.apispec
 
 // The copyright displayed in application information
-PRODUCT_COPYRIGHT = Copyright © 2025 cc.peepapat.nocode.apispec. All rights reserved.
+PRODUCT_COPYRIGHT = Copyright © 2025 cc.peepapat. All rights reserved.

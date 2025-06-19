@@ -2,7 +2,6 @@ import 'package:apispec/features/home/presentation/setting_screen.dart';
 import 'package:apispec/features/home/presentation/welcome_screen.dart';
 import 'package:apispec/features/home/presentation/workspace_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:apispec/global.dart' as g;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

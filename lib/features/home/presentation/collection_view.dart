@@ -32,7 +32,7 @@ class _CollectionViewState extends State<CollectionView> {
             child: ListView.builder(
               itemCount: widget.collections.length,
               itemBuilder: (context, index) => ListTile(
-                leading: Icon(Icons.api, color: Colors.blue, size: 16),
+                leading: Icon(Icons.edit_note, color: Colors.blue, size: 24),
                 title: TextButton(
                   child: Align(
                     alignment: Alignment.centerLeft,

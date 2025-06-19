@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:apispec/global.dart' as g;
 
 
 class SettingScreen extends StatefulWidget {

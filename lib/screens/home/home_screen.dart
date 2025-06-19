@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:apispec/global.dart' as g;
-import 'package:apispec/core/presentation/line_text_field.dart';
+import 'package:apispec/screens/line_text_field.dart';
 
 
 class VSCodeHomePage extends StatefulWidget {

@@ -4,7 +4,7 @@ class WorkspaceController extends GetxController {
 
   final collections = <String>[].obs;
 
-  loadCollections() {
+  void loadCollections() {
     print("Yo!");
     collections.assignAll(["build_info", "signin"]);
   }

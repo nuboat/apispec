@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:apispec/global.dart' as g;
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -11,7 +10,7 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 256,
       child: Row(children: <Widget>[Expanded(child: Text("  Welcome"))]),
     );

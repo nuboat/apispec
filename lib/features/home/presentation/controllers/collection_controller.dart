@@ -4,8 +4,8 @@ class CollectionController extends GetxController {
 
   late APIModel model;
 
-  loadAPISpec() {
-    model = new APIModel();
+  void loadAPISpec() {
+    model = APIModel();
   }
 
   @override
