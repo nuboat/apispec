@@ -17,14 +17,13 @@ class _APIViewState extends State<APIView> {
         children: <Widget>[
           actionBar(),
           Expanded(
+            flex: 3,
             child: Row(
               children: <Widget>[
                 Expanded(
+                  flex: 2,
                   child: Column(
-                    children: <Widget>[
-                      textFieldBody(),
-                      textFooter(),
-                    ],
+                    children: <Widget>[textFieldBody(), textFooter()],
                   ),
                 ),
                 Expanded(child: textFieldBody()),
@@ -39,25 +38,18 @@ class _APIViewState extends State<APIView> {
   Widget actionBar() {
     return Container(
       height: 35,
-      color: const Color(0xFF252526),
+      color: const Color(0xFF000000),
       child: Row(
         children: [
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            color: const Color(0xFF1E1E1E),
+            color: const Color(0xFF444444),
             child: const Center(
               child: Row(
                 children: [
-                  Icon(
-                    Icons.wysiwyg,
-                    color: Colors.blue,
-                    size: 16,
-                  ),
+                  Icon(Icons.wysiwyg, color: Colors.blue, size: 16),
                   SizedBox(width: 8),
-                  Text(
-                    "API",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  Text("API", style: TextStyle(color: Colors.white)),
                   SizedBox(width: 8),
                 ],
               ),
@@ -69,16 +61,9 @@ class _APIViewState extends State<APIView> {
             child: const Center(
               child: Row(
                 children: [
-                  Text(
-                    "{ pre }",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  Text("{ pre }", style: TextStyle(color: Colors.white)),
                   SizedBox(width: 8),
-                  Icon(
-                    Icons.arrow_back_ios,
-                    color: Colors.blue,
-                    size: 16,
-                  ),
+                  Icon(Icons.arrow_back_ios, color: Colors.blue, size: 16),
                   SizedBox(width: 8),
                 ],
               ),
@@ -90,16 +75,9 @@ class _APIViewState extends State<APIView> {
             child: const Center(
               child: Row(
                 children: [
-                  Icon(
-                    Icons.arrow_forward_ios,
-                    color: Colors.blue,
-                    size: 16,
-                  ),
+                  Icon(Icons.arrow_forward_ios, color: Colors.blue, size: 16),
                   SizedBox(width: 8),
-                  Text(
-                    "{ post }",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  Text("{ post }", style: TextStyle(color: Colors.white)),
                   SizedBox(width: 8),
                 ],
               ),
@@ -111,16 +89,9 @@ class _APIViewState extends State<APIView> {
             child: const Center(
               child: Row(
                 children: [
-                  Icon(
-                    Icons.grading,
-                    color: Colors.blue,
-                    size: 16,
-                  ),
+                  Icon(Icons.grading, color: Colors.blue, size: 16),
                   SizedBox(width: 8),
-                  Text(
-                    "Spec",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  Text("Spec", style: TextStyle(color: Colors.white)),
                   SizedBox(width: 8),
                 ],
               ),
@@ -132,16 +103,9 @@ class _APIViewState extends State<APIView> {
             child: const Center(
               child: Row(
                 children: [
-                  Icon(
-                    Icons.article,
-                    color: Colors.blue,
-                    size: 16,
-                  ),
+                  Icon(Icons.article, color: Colors.blue, size: 16),
                   SizedBox(width: 8),
-                  Text(
-                    "Document",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  Text("Document", style: TextStyle(color: Colors.white)),
                   SizedBox(width: 8),
                 ],
               ),
@@ -154,16 +118,9 @@ class _APIViewState extends State<APIView> {
             child: const Center(
               child: Row(
                 children: [
-                  Icon(
-                    Icons.play_arrow,
-                    color: Colors.blue,
-                    size: 16,
-                  ),
+                  Icon(Icons.play_arrow, color: Colors.blue, size: 16),
                   SizedBox(width: 8),
-                  Text(
-                    "Send",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  Text("Send", style: TextStyle(color: Colors.white)),
                   SizedBox(width: 8),
                 ],
               ),
@@ -175,16 +132,9 @@ class _APIViewState extends State<APIView> {
             child: const Center(
               child: Row(
                 children: [
-                  Icon(
-                    Icons.data_object,
-                    color: Colors.blue,
-                    size: 16,
-                  ),
+                  Icon(Icons.data_object, color: Colors.blue, size: 16),
                   SizedBox(width: 8),
-                  Text(
-                    "Data",
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  Text("Data", style: TextStyle(color: Colors.white)),
                   SizedBox(width: 8),
                 ],
               ),
@@ -194,21 +144,6 @@ class _APIViewState extends State<APIView> {
       ),
     );
   }
-
-  // Widget request() {
-  //   return Container(
-  //     color: Colors.blue,
-  //     child: const Padding(
-  //       padding: EdgeInsets.symmetric(horizontal: 8.0),
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         children: <Widget>[
-  //           Row(children: [Text("Request")]),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
 
   Widget textFieldBody() {
     return Expanded(

@@ -14,11 +14,15 @@ class _AuthenScreenState extends State<AuthenScreen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _authen() {
-    final hasAuthorize = true; // TODO
+    // final hasAuthorize = true; // TODO
+    //
+    // if (hasAuthorize) {
+    //   Get.to(() => HomeScreen());
+    // }
+  }
 
-    if (hasAuthorize) {
-      Get.to(() => HomeScreen());
-    }
+  void _guest() {
+    Get.to(() => HomeScreen());
   }
 
   @override
@@ -43,6 +47,8 @@ class _AuthenScreenState extends State<AuthenScreen> {
                 textFieldPassword(),
                 const SizedBox(height: 32),
                 btnSignIn(),
+                const SizedBox(height: 32),
+                btnGuest(),
               ],
             ),
           ),
@@ -98,6 +104,13 @@ class _AuthenScreenState extends State<AuthenScreen> {
     return ElevatedButton(
       onPressed: _authen,
       child: const Text('เข้าสู่ระบบ'),
+    );
+  }
+
+  ElevatedButton btnGuest() {
+    return ElevatedButton(
+      onPressed: _guest,
+      child: const Text('เข้าสู่ระบบแบบไม่ Login'),
     );
   }
 

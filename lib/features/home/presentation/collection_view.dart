@@ -24,7 +24,7 @@ class _CollectionViewState extends State<CollectionView> {
   Widget build(BuildContext context) {
     return Container(
       width: 256,
-      color: const Color(0xFF444444),
+      color: const Color(0xFF404040),
       child: Column(
         children: <Widget>[
           menu(),
