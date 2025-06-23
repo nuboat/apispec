@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:apispec/global.dart' as g;
+import 'package:apispec/mock.dart' as m;
 import 'package:apispec/screens/line_text_field.dart';
 
 
@@ -194,7 +195,7 @@ class _VSCodeHomePageState extends State<VSCodeHomePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text("Workspace", style: TextStyle(color: Colors.grey, fontSize: 12), ),
-            SizedBox(height: 10),
+            SizedBox(height: 16),
             Padding(
               padding: EdgeInsets.only(left: 24),
               child: Column(
@@ -303,7 +304,7 @@ class _VSCodeHomePageState extends State<VSCodeHomePage> {
           decoration: const InputDecoration(
             border: InputBorder.none,
           ),
-          controller: TextEditingController(text: g.sampleCode),
+          controller: TextEditingController(text: m.sampleCode),
         ),
       ),
     );

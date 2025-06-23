@@ -1,14 +1,23 @@
-import 'package:flutter/material.dart';
 import 'package:apispec/global.dart' as g;
+import 'package:apispec/mock.dart' as m;
+import 'package:flutter/material.dart';
 
 class APIView extends StatefulWidget {
-  const APIView({super.key});
+  const APIView({super.key, required this.environments, required this.reload});
+
+  final List<String> environments;
+
+  final Function reload;
 
   @override
   State<APIView> createState() => _APIViewState();
 }
 
 class _APIViewState extends State<APIView> {
+  void _refresh() {
+    widget.reload();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,16 +26,11 @@ class _APIViewState extends State<APIView> {
         children: <Widget>[
           actionBar(),
           Expanded(
-            flex: 3,
+            flex: 5,
             child: Row(
               children: <Widget>[
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    children: <Widget>[textFieldBody(), textFooter()],
-                  ),
-                ),
-                Expanded(child: textFieldBody()),
+                Expanded(flex: 3, child: tabBarAPI()),
+                Expanded(child: responsePreview()),
               ],
             ),
           ),
@@ -41,111 +45,51 @@ class _APIViewState extends State<APIView> {
       color: const Color(0xFF000000),
       child: Row(
         children: [
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            color: const Color(0xFF444444),
-            child: const Center(
-              child: Row(
-                children: [
-                  Icon(Icons.wysiwyg, color: Colors.blue, size: 16),
-                  SizedBox(width: 8),
-                  Text("API", style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 8),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            color: const Color(0xFF1E1E1E),
-            child: const Center(
-              child: Row(
-                children: [
-                  Text("{ pre }", style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 8),
-                  Icon(Icons.arrow_back_ios, color: Colors.blue, size: 16),
-                  SizedBox(width: 8),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            color: const Color(0xFF1E1E1E),
-            child: const Center(
-              child: Row(
-                children: [
-                  Icon(Icons.arrow_forward_ios, color: Colors.blue, size: 16),
-                  SizedBox(width: 8),
-                  Text("{ post }", style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 8),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            color: const Color(0xFF1E1E1E),
-            child: const Center(
-              child: Row(
-                children: [
-                  Icon(Icons.grading, color: Colors.blue, size: 16),
-                  SizedBox(width: 8),
-                  Text("Spec", style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 8),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            color: const Color(0xFF1E1E1E),
-            child: const Center(
-              child: Row(
-                children: [
-                  Icon(Icons.article, color: Colors.blue, size: 16),
-                  SizedBox(width: 8),
-                  Text("Document", style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 8),
-                ],
-              ),
-            ),
-          ),
+          btnSend(),
           const Spacer(),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            color: const Color(0xFF1E1E1E),
-            child: const Center(
-              child: Row(
-                children: [
-                  Icon(Icons.play_arrow, color: Colors.blue, size: 16),
-                  SizedBox(width: 8),
-                  Text("Send", style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 8),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            color: const Color(0xFF1E1E1E),
-            child: const Center(
-              child: Row(
-                children: [
-                  Icon(Icons.data_object, color: Colors.blue, size: 16),
-                  SizedBox(width: 8),
-                  Text("Data", style: TextStyle(color: Colors.white)),
-                  SizedBox(width: 8),
-                ],
-              ),
-            ),
-          ),
+          dropdownEnvironment(),
+          SizedBox(width: 8),
+          dropdownExport(),
+          SizedBox(width: 8),
         ],
       ),
     );
   }
 
-  Widget textFieldBody() {
+  Widget tabBarAPI() {
+    return Expanded(
+      child: DefaultTabController(
+        initialIndex: 1,
+        length: 5,
+        child: Scaffold(
+          appBar: AppBar(
+            automaticallyImplyLeading: false,
+            title: const TabBar(
+              dividerColor: Colors.transparent,
+              tabs: <Widget>[
+                Tab(icon: Icon(Icons.wysiwyg)),
+                Tab(icon: Icon(Icons.navigate_before)),
+                Tab(icon: Icon(Icons.navigate_next)),
+                Tab(icon: Icon(Icons.article)),
+                Tab(icon: Icon(Icons.settings_applications)),
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: <Widget>[
+              textEditAPI(),
+              textEditPreProcess(),
+              textEditPostProcess(),
+              textEditSpec(),
+              markdownDocument(),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget responsePreview() {
     return Expanded(
       child: Container(
         padding: const EdgeInsets.all(0.0),
@@ -159,9 +103,158 @@ class _APIViewState extends State<APIView> {
             fontSize: 13,
           ),
           decoration: const InputDecoration(border: InputBorder.none),
-          controller: TextEditingController(text: g.sampleCode),
+          controller: TextEditingController(text: m.sampleResponse),
         ),
       ),
+    );
+  }
+
+  Widget textEditAPI() {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: TextField(
+            maxLines: null,
+            expands: true,
+            style: const TextStyle(
+              fontFamily: g.mainFont,
+              color: Colors.white,
+              fontSize: 13,
+            ),
+            decoration: const InputDecoration(border: InputBorder.none),
+            controller: TextEditingController(text: m.sampleCode),
+          ),
+        ),
+        textFooter(),
+      ],
+    );
+  }
+
+  Widget textEditPreProcess() {
+    return Column(
+      children: <Widget>[
+        Expanded(child: TextField(
+          maxLines: null,
+          expands: true,
+          style: const TextStyle(
+            fontFamily: g.mainFont,
+            color: Colors.white,
+            fontSize: 13,
+          ),
+          decoration: const InputDecoration(border: InputBorder.none),
+          controller: TextEditingController(text: "Pre Process"),
+        )),
+        textFooter(),
+      ],
+    );
+  }
+
+  Widget textEditPostProcess() {
+    return TextField(
+      maxLines: null,
+      expands: true,
+      style: const TextStyle(
+        fontFamily: g.mainFont,
+        color: Colors.white,
+        fontSize: 13,
+      ),
+      decoration: const InputDecoration(border: InputBorder.none),
+      controller: TextEditingController(text: "Post Process"),
+    );
+  }
+
+  Widget textEditSpec() {
+    return TextField(
+      maxLines: null,
+      expands: true,
+      style: const TextStyle(
+        fontFamily: g.mainFont,
+        color: Colors.white,
+        fontSize: 13,
+      ),
+      decoration: const InputDecoration(border: InputBorder.none),
+      controller: TextEditingController(text: "Spec"),
+    );
+  }
+
+  Widget markdownDocument() {
+    return TextField(
+      maxLines: null,
+      expands: true,
+      style: const TextStyle(
+        fontFamily: g.mainFont,
+        color: Colors.white,
+        fontSize: 13,
+      ),
+      decoration: const InputDecoration(border: InputBorder.none),
+      controller: TextEditingController(text: "Markdown Document"),
+    );
+  }
+
+  Widget btnSend() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      color: const Color(0xFF1E1E1E),
+      child: Center(
+        child: Row(
+          children: [
+            Icon(Icons.play_arrow, color: Colors.blue, size: 16),
+            SizedBox(width: 8),
+            TextButton(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Send',
+                  style: TextStyle(color: Colors.white, fontSize: 13),
+                ),
+              ),
+              onPressed: () => "",
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget dropdownEnvironment() {
+    var dropdownValue = 'No Env';
+    final list = <String>['No Env', 'SIT', 'UAT', 'Production'];
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.data_object),
+      elevation: 13,
+      style: const TextStyle(color: Colors.white),
+      underline: Container(height: 0),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(value: value, child: Text(value));
+      }).toList(),
+    );
+  }
+
+  Widget dropdownExport() {
+    var dropdownValue = 'Save';
+    final list = <String>['Save', 'REST', 'CURL', 'Document'];
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: const Icon(Icons.save),
+      elevation: 13,
+      style: const TextStyle(color: Colors.white),
+      underline: Container(height: 0),
+      onChanged: (String? value) {
+        // This is called when the user selects an item.
+        setState(() {
+          dropdownValue = value!;
+        });
+      },
+      items: list.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(value: value, child: Text(value));
+      }).toList(),
     );
   }
 

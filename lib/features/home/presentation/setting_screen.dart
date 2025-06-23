@@ -14,7 +14,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        Expanded(child: Text(" Welcome"))
+        Expanded(child: Text(" Setting"))
       ],
     );
   }

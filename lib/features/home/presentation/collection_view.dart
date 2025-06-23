@@ -55,7 +55,7 @@ class _CollectionViewState extends State<CollectionView> {
   Widget menu() {
     return Row(
       children: <Widget>[
-        Text(" "),
+        SizedBox(width: 8),
         Expanded(child: Text("Collections")),
         const Spacer(),
         SizedBox(
