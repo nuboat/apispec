@@ -3,7 +3,9 @@ import 'package:apispec/mock.dart' as m;
 import 'package:flutter/material.dart';
 
 class APIView extends StatefulWidget {
-  const APIView({super.key, required this.environments, required this.reload});
+  const APIView({super.key
+    , required this.environments
+    , required this.reload});
 
   final List<String> environments;
 
@@ -14,6 +16,7 @@ class APIView extends StatefulWidget {
 }
 
 class _APIViewState extends State<APIView> {
+
   void _refresh() {
     widget.reload();
   }

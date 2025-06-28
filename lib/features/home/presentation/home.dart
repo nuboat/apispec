@@ -1,17 +1,24 @@
+import 'package:apispec/features/home/presentation/environment_screen.dart';
 import 'package:apispec/features/home/presentation/setting_screen.dart';
 import 'package:apispec/features/home/presentation/welcome_screen.dart';
 import 'package:apispec/features/home/presentation/workspace_screen.dart';
-import 'package:apispec/features/home/presentation/environment_screen.dart';
+import 'package:apispec/features/login/presentation/authen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class Home extends StatefulWidget {
+  const Home({
+    super.key,
+    required this.mode,
+  });
+
+  final String mode;
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<Home> createState() => _HomeState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeState extends State<Home> {
 
   var activeScreen = "Welcome";
 
@@ -30,6 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 iconEnvironment(),
                 const Spacer(),
                 iconSetting(),
+                iconSignOut(),
               ],
             ),
           ),
@@ -90,6 +98,18 @@ class _HomeScreenState extends State<HomeScreen> {
       onPressed: () {
         setState(() {
           activeScreen = "Setting";
+        });
+      },
+    );
+  }
+
+  IconButton iconSignOut() {
+    return IconButton(
+      icon: const Icon(Icons.logout),
+      color: Colors.grey,
+      onPressed: () {
+        setState(() {
+          Get.to(() => Authen());
         });
       },
     );

@@ -1,28 +1,24 @@
-import 'package:apispec/features/home/presentation/home_screen.dart';
+import 'package:apispec/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class AuthenScreen extends StatefulWidget {
-  const AuthenScreen({super.key});
+class Authen extends StatefulWidget {
+  const Authen({super.key});
 
   @override
-  State<AuthenScreen> createState() => _AuthenScreenState();
+  State<Authen> createState() => _AuthenState();
 }
 
-class _AuthenScreenState extends State<AuthenScreen> {
+class _AuthenState extends State<Authen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
   void _authen() {
-    // final hasAuthorize = true; // TODO
-    //
-    // if (hasAuthorize) {
-    //   Get.to(() => HomeScreen());
-    // }
+    Get.to(() => Home(mode: "1"));
   }
 
   void _guest() {
-    Get.to(() => HomeScreen());
+    Get.to(() => Home(mode: "1")); // assume guest
   }
 
   @override
@@ -46,7 +42,7 @@ class _AuthenScreenState extends State<AuthenScreen> {
                 const SizedBox(height: 16),
                 textFieldPassword(),
                 const SizedBox(height: 32),
-                btnSignIn(),
+                btnSignIn(context),
                 const SizedBox(height: 32),
                 btnGuest(),
               ],
@@ -71,15 +67,13 @@ class _AuthenScreenState extends State<AuthenScreen> {
   Text textSignInAction() {
     return Text(
       'เข้าสู่ระบบ',
-      style: TextStyle(
-        fontSize: 16,
-        color: Colors.grey[400],
-      ),
+      style: TextStyle(fontSize: 16, color: Colors.grey[400]),
     );
   }
 
   TextField textFieldEmail() {
     return TextField(
+      enabled: false,
       controller: _emailController,
       decoration: const InputDecoration(
         labelText: 'อีเมล',
@@ -91,18 +85,21 @@ class _AuthenScreenState extends State<AuthenScreen> {
 
   TextField textFieldPassword() {
     return TextField(
+      enabled: false,
       controller: _passwordController,
       decoration: const InputDecoration(
         labelText: 'รหัสผ่าน',
-        prefixIcon: Icon(Icons.lock_outline),
+        prefixIcon: Icon(Icons.login),
       ),
       obscureText: true,
     );
   }
 
-  ElevatedButton btnSignIn() {
+  ElevatedButton btnSignIn(BuildContext context) {
     return ElevatedButton(
-      onPressed: _authen,
+      onPressed: () => showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => underConstruction()),
       child: const Text('เข้าสู่ระบบ'),
     );
   }
@@ -111,6 +108,18 @@ class _AuthenScreenState extends State<AuthenScreen> {
     return ElevatedButton(
       onPressed: _guest,
       child: const Text('เข้าสู่ระบบแบบไม่ Login'),
+    );
+  }
+
+  AlertDialog underConstruction() {
+    return AlertDialog(
+      content: const Text('ยังไม่รองรับตอนนี้'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.pop(context, 'OK'),
+          child: const Text('OK'),
+        ),
+      ],
     );
   }
 

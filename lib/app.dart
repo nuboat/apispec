@@ -1,4 +1,4 @@
-import 'package:apispec/features/login/presentation/authen_screen.dart';
+import 'package:apispec/features/login/presentation/authen.dart';
 import 'package:apispec/global.dart' as g;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,7 +37,7 @@ class APISpecApp extends StatelessWidget {
           labelStyle: TextStyle(color: Colors.grey[400]),
         ),
       ),
-      home: const AuthenScreen(),
+      home: const Authen(),
     );
   }
 }
