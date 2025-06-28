@@ -17,6 +17,8 @@ class APIView extends StatefulWidget {
 
 class _APIViewState extends State<APIView> {
 
+  bool plaintextMode = false;
+
   void _refresh() {
     widget.reload();
   }
@@ -29,11 +31,10 @@ class _APIViewState extends State<APIView> {
         children: <Widget>[
           actionBar(),
           Expanded(
-            flex: 5,
             child: Row(
               children: <Widget>[
-                Expanded(flex: 3, child: tabBarAPI()),
-                Expanded(child: responsePreview()),
+                Expanded(child: tabBarAPI()),
+                responsePreview(),
               ],
             ),
           ),
@@ -50,10 +51,12 @@ class _APIViewState extends State<APIView> {
         children: [
           btnSend(),
           const Spacer(),
+          switchEditMode(),
+          SizedBox(width: 16),
           dropdownEnvironment(),
-          SizedBox(width: 8),
+          SizedBox(width: 16),
           dropdownExport(),
-          SizedBox(width: 8),
+          SizedBox(width: 16),
         ],
       ),
     );
@@ -62,8 +65,8 @@ class _APIViewState extends State<APIView> {
   Widget tabBarAPI() {
     return Expanded(
       child: DefaultTabController(
-        initialIndex: 1,
-        length: 5,
+        initialIndex: 0,
+        length: 6,
         child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
@@ -73,6 +76,7 @@ class _APIViewState extends State<APIView> {
                 Tab(icon: Icon(Icons.wysiwyg)),
                 Tab(icon: Icon(Icons.navigate_before)),
                 Tab(icon: Icon(Icons.navigate_next)),
+                Tab(icon: Icon(Icons.bug_report)),
                 Tab(icon: Icon(Icons.article)),
                 Tab(icon: Icon(Icons.settings_applications)),
               ],
@@ -85,6 +89,7 @@ class _APIViewState extends State<APIView> {
               textEditPostProcess(),
               textEditSpec(),
               markdownDocument(),
+              settingAPI(),
             ],
           ),
         ),
@@ -93,11 +98,12 @@ class _APIViewState extends State<APIView> {
   }
 
   Widget responsePreview() {
-    return Expanded(
-      child: Container(
+    return Container(
+        width: MediaQuery.sizeOf(context).width / 4,
         padding: const EdgeInsets.all(0.0),
         color: const Color(0xFF1E1E1E),
         child: TextField(
+          enabled: false,
           maxLines: null,
           expands: true,
           style: const TextStyle(
@@ -108,8 +114,7 @@ class _APIViewState extends State<APIView> {
           decoration: const InputDecoration(border: InputBorder.none),
           controller: TextEditingController(text: m.sampleResponse),
         ),
-      ),
-    );
+      );
   }
 
   Widget textEditAPI() {
@@ -194,6 +199,46 @@ class _APIViewState extends State<APIView> {
     );
   }
 
+  Widget settingAPI() {
+    return TextField(
+      maxLines: null,
+      expands: true,
+      style: const TextStyle(
+        fontFamily: g.mainFont,
+        color: Colors.white,
+        fontSize: 13,
+      ),
+      decoration: const InputDecoration(border: InputBorder.none),
+      controller: TextEditingController(text: "Setting"),
+    );
+  }
+
+  Widget switchEditMode() {
+    return Container(
+      child: Center(
+        child: Row(
+          children: [
+            Text(
+              'Plain ',
+              style: TextStyle(color: Colors.white, fontSize: 13),
+            ),
+            Switch(
+            // This bool value toggles the switch.
+            value: plaintextMode,
+            activeColor: Colors.teal,
+            onChanged: (bool value) {
+              // This is called when the user toggles the switch.
+              setState(() {
+                plaintextMode = value;
+              });
+            },
+          ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget btnSend() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -225,11 +270,9 @@ class _APIViewState extends State<APIView> {
     return DropdownButton<String>(
       value: dropdownValue,
       icon: const Icon(Icons.data_object),
-      elevation: 13,
       style: const TextStyle(color: Colors.white),
       underline: Container(height: 0),
       onChanged: (String? value) {
-        // This is called when the user selects an item.
         setState(() {
           dropdownValue = value!;
         });
@@ -241,19 +284,16 @@ class _APIViewState extends State<APIView> {
   }
 
   Widget dropdownExport() {
-    var dropdownValue = 'Save';
-    final list = <String>['Save', 'REST', 'CURL', 'Document'];
+    var dropdownValue = 'Export';
+    final list = <String>['Export', 'REST', 'CURL', 'Document'];
     return DropdownButton<String>(
       value: dropdownValue,
-      icon: const Icon(Icons.save),
-      elevation: 13,
+      icon: const Icon(Icons.save_as),
       style: const TextStyle(color: Colors.white),
       underline: Container(height: 0),
       onChanged: (String? value) {
-        // This is called when the user selects an item.
-        setState(() {
-          dropdownValue = value!;
-        });
+        // Save to Clipboard
+        setState(() {  });
       },
       items: list.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(value: value, child: Text(value));
@@ -291,4 +331,5 @@ class _APIViewState extends State<APIView> {
       ),
     );
   }
+
 }

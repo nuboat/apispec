@@ -33,11 +33,16 @@ class _HomeState extends State<Home> {
             child: Column(
               children: <Widget>[
                 iconWelcome(),
+                SizedBox(height: 16),
                 iconWorkspace(),
+                SizedBox(height: 16),
                 iconEnvironment(),
+                SizedBox(height: 16),
                 const Spacer(),
                 iconSetting(),
+                SizedBox(height: 8),
                 iconSignOut(),
+                SizedBox(height: 8),
               ],
             ),
           ),
@@ -57,8 +62,8 @@ class _HomeState extends State<Home> {
 
   IconButton iconWelcome() {
     return IconButton(
-      icon: const Icon(Icons.home),
-      color: Colors.grey,
+      icon: const Icon(Icons.home, size: 32),
+      color: Colors.teal,
       onPressed: () {
         setState(() {
           activeScreen = "Welcome";
@@ -69,8 +74,8 @@ class _HomeState extends State<Home> {
 
   IconButton iconWorkspace() {
     return IconButton(
-      icon: const Icon(Icons.workspaces),
-      color: Colors.grey,
+      icon: const Icon(Icons.workspaces, size: 32),
+      color: Colors.teal,
       onPressed: () {
         setState(() {
           activeScreen = "Workspace";
@@ -81,8 +86,8 @@ class _HomeState extends State<Home> {
 
   IconButton iconEnvironment() {
     return IconButton(
-      icon: const Icon(Icons.data_object),
-      color: Colors.grey,
+      icon: const Icon(Icons.data_object, size: 32),
+      color: Colors.teal,
       onPressed: () {
         setState(() {
           activeScreen = "Environment";
@@ -93,7 +98,7 @@ class _HomeState extends State<Home> {
 
   IconButton iconSetting() {
     return IconButton(
-      icon: const Icon(Icons.settings),
+      icon: const Icon(Icons.settings, size: 24),
       color: Colors.grey,
       onPressed: () {
         setState(() {
@@ -105,7 +110,7 @@ class _HomeState extends State<Home> {
 
   IconButton iconSignOut() {
     return IconButton(
-      icon: const Icon(Icons.logout),
+      icon: const Icon(Icons.logout, size: 24),
       color: Colors.grey,
       onPressed: () {
         setState(() {

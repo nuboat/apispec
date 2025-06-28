@@ -113,10 +113,10 @@ class _AuthenState extends State<Authen> {
 
   AlertDialog underConstruction() {
     return AlertDialog(
-      content: const Text('ยังไม่รองรับตอนนี้'),
+      content: const Text('ยังไม่รองรับตอนนี้ จะเข้าเป็นแบบ Guest นะ'),
       actions: <Widget>[
         TextButton(
-          onPressed: () => Navigator.pop(context, 'OK'),
+          onPressed: () => _authen(),
           child: const Text('OK'),
         ),
       ],

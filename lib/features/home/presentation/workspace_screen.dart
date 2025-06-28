@@ -1,7 +1,7 @@
 import 'package:apispec/features/home/presentation/api_view.dart';
 import 'package:apispec/features/home/presentation/collection_view.dart';
+import 'package:apispec/features/home/presentation/controllers/environment_controller.dart';
 import 'package:apispec/features/home/presentation/controllers/workspace_controller.dart';
-import 'package:apispec/features/home/presentation/controllers/api_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,10 +13,11 @@ class WorkspaceScreen extends StatefulWidget {
 }
 
 class _WorkspaceScreenState extends State<WorkspaceScreen> {
+
   @override
   Widget build(BuildContext context) {
     final workspaceController = Get.put(WorkspaceController());
-    final apiController = Get.put(APIController());
+    final envController = Get.put(EnvironmentController());
 
     return SizedBox(
       width: 208,
@@ -27,8 +28,8 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
             reload: workspaceController.loadCollections,
           ),
           Expanded(child: APIView(
-            environments: apiController.collections,
-            reload: apiController.loadCollections,
+            environments: envController.environments,
+            reload: envController.loadEnvironments,
           )),
         ],
       ),

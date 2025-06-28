@@ -2,20 +2,17 @@ import 'package:get/get.dart';
 
 class CollectionController extends GetxController {
 
-  late APIModel model;
+  final collections = <String>[].obs;
 
-  void loadAPISpec() {
-    model = APIModel();
+  void loadCollections() {
+    collections.assignAll(["No Env", "SIT", "UAT", "Production"]);
   }
 
   @override
   void onInit() {
-    loadAPISpec();
+    loadCollections();
     super.onInit();
   }
-}
 
-class APIModel {
-  String request = "";
-  String response = "";
+
 }

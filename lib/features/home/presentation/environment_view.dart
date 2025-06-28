@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 
-class CollectionView extends StatefulWidget {
-  const CollectionView({
+class EnvironmentView extends StatefulWidget {
+  const EnvironmentView({
     super.key,
-    required this.collections,
+    required this.environments,
     required this.reload,
   });
 
-  final List<String> collections;
+  final List<String> environments;
 
   final Function reload;
 
   @override
-  State<CollectionView> createState() => _CollectionViewState();
+  State<EnvironmentView> createState() => _EnvironmentViewState();
 }
 
-class _CollectionViewState extends State<CollectionView> {
-
-  void _newAPI() {
-    //
+class _EnvironmentViewState extends State<EnvironmentView> {
+  void _refresh() {
+    widget.reload();
   }
 
   @override
@@ -33,14 +32,14 @@ class _CollectionViewState extends State<CollectionView> {
           SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
-              itemCount: widget.collections.length,
+              itemCount: widget.environments.length,
               itemBuilder: (context, index) => ListTile(
                 leading: Icon(Icons.edit_note, color: Colors.blue, size: 24),
                 title: TextButton(
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.collections.elementAt(index),
+                      widget.environments.elementAt(index),
                       style: TextStyle(color: Colors.white, fontSize: 13),
                     ),
                   ),
@@ -61,9 +60,9 @@ class _CollectionViewState extends State<CollectionView> {
       child: Row(
         children: <Widget>[
           SizedBox(width: 16),
-          Text("Collections", style: TextStyle(fontSize: 16)),
+          Text("Environments", style: TextStyle(fontSize: 16)),
           const Spacer(),
-          IconButton(icon: Icon(Icons.add, size: 24), onPressed: _newAPI),
+          IconButton(icon: Icon(Icons.refresh, size: 24), onPressed: _refresh),
           SizedBox(width: 16),
         ],
       ),
