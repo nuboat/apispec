@@ -18,9 +18,9 @@ class EnvironmentController extends GetxController {
 
   @override
   void onInit() {
-    loadEnvironment();
     _local().then( (value) { print(value); });
 
+    loadEnvironment();
     super.onInit();
   }
 
