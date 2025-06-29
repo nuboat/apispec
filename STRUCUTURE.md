@@ -12,6 +12,8 @@
 
 for guest
 /applications
-    /personal
+    /Personal
         /collections
+            /default
+                /build_info.rest
         /environments

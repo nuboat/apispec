@@ -214,27 +214,25 @@ class _APIViewState extends State<APIView> {
   }
 
   Widget switchEditMode() {
-    return Container(
-      child: Center(
-        child: Row(
-          children: [
-            Text(
-              'Plain ',
-              style: TextStyle(color: Colors.white, fontSize: 13),
-            ),
-            Switch(
-            // This bool value toggles the switch.
-            value: plaintextMode,
-            activeColor: Colors.teal,
-            onChanged: (bool value) {
-              // This is called when the user toggles the switch.
-              setState(() {
-                plaintextMode = value;
-              });
-            },
+    return Center(
+      child: Row(
+        children: [
+          Text(
+            'Plain ',
+            style: TextStyle(color: Colors.white, fontSize: 13),
           ),
-          ],
+          Switch(
+          // This bool value toggles the switch.
+          value: plaintextMode,
+          activeColor: Colors.teal,
+          onChanged: (bool value) {
+            // This is called when the user toggles the switch.
+            setState(() {
+              plaintextMode = value;
+            });
+          },
         ),
+        ],
       ),
     );
   }

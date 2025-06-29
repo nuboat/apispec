@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'dart:io';
-import 'package:intl/intl.dart';
+
+import 'package:apispec/core/common/date_facade.dart' as d;
+import 'package:apispec/core/data/collection_facade.dart' as c;
 import 'package:apispec/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:path_provider/path_provider.dart';
 
 class Authen extends StatefulWidget {
   const Authen({super.key});
@@ -22,13 +22,17 @@ class _AuthenState extends State<Authen> {
   }
 
   void _guest() {
-    _readDirectory().then( (path) {
+    c.homeDirectory().then( (path) {
+      c.home = path;
+      c.application = "Personal";
+      c.collection = "default";
+
       if (!File('$path/initiated.txt').existsSync()) {
-        new File('$path/initiated.txt')
-            .writeAsStringSync(_nowInStr(), flush: true);
-        new Directory('$path/applications/Personal')
+        File('$path/initiated.txt')
+            .writeAsStringSync("Initialed: ${d.nowInStr()}\n", flush: true);
+        Directory(c.workPath())
             .createSync(recursive: true);
-        new File('$path/applications/Personal/build_info.rest')
+        File('${c.workPath()}/build_info.rest')
             .writeAsStringSync(_buildInfo, flush: true);
       }
     });
@@ -36,15 +40,7 @@ class _AuthenState extends State<Authen> {
     Get.to(() => Home(mode: "1")); // assume guest
   }
 
-  String _nowInStr() {
-    final now = DateTime.now();
-    return DateFormat("yyyy-MM-dd kk:mm:ss+0700").format(now);
-  }
 
-  Future<String> _readDirectory() async {
-    final directory = await getApplicationDocumentsDirectory();
-    return directory.path;
-  }
 
   @override
   Widget build(BuildContext context) {
