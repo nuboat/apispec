@@ -1,7 +1,8 @@
 import 'dart:io';
 
 import 'package:apispec/core/common/date_facade.dart' as d;
-import 'package:apispec/core/data/collection_facade.dart' as c;
+import 'package:apispec/core/data/api_facade.dart' as a;
+import 'package:apispec/core/data/base.dart' as b;
 import 'package:apispec/features/home/presentation/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,25 +23,25 @@ class _AuthenState extends State<Authen> {
   }
 
   void _guest() {
-    c.homeDirectory().then( (path) {
-      c.home = path;
-      c.application = "Personal";
-      c.collection = "default";
+    b.homeDirectory().then( (path) {
+      b.home = path;
+      b.application = "Personal";
+      b.folder = "default";
 
       if (!File('$path/initiated.txt').existsSync()) {
-        File('$path/initiated.txt')
-            .writeAsStringSync("Initialed: ${d.nowInStr()}\n", flush: true);
-        Directory(c.workPath())
+        final file = File('$path/initiated.txt');
+        file.writeAsString("Initialed: ${d.nowInStr()}\n");
+        file.writeAsStringSync("Version: 1.0", flush: true);
+
+        Directory(a.workPath())
             .createSync(recursive: true);
-        File('${c.workPath()}/build_info.rest')
+        File('${a.workPath()}/build_info.rest')
             .writeAsStringSync(_buildInfo, flush: true);
       }
     });
 
     Get.to(() => Home(mode: "1")); // assume guest
   }
-
-
 
   @override
   Widget build(BuildContext context) {

@@ -1,23 +1,29 @@
-import 'package:apispec/core/data/collection_facade.dart' as f;
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
 
-class CollectionView extends StatefulWidget {
-  const CollectionView({
+class FolderView extends StatefulWidget {
+  const FolderView({
     super.key,
-    required this.collections,
-    required this.reload,
+    required this.listAPI,
+    required this.loadAPI,
+    required this.listFolder,
+    required this.loadFolder,
   });
 
-  final List<String> collections;
+  final List<String> listAPI;
+  final List<String> listFolder;
 
-  final Function reload;
+  final Function loadAPI;
+  final Function loadFolder;
 
   @override
-  State<CollectionView> createState() => _CollectionViewState();
+  State<FolderView> createState() => _FolderViewState();
 }
 
-class _CollectionViewState extends State<CollectionView> {
+class _FolderViewState extends State<FolderView> {
+
+  void _newDirectory() {
+    //
+  }
 
   void _newAPI() {
     //
@@ -25,10 +31,6 @@ class _CollectionViewState extends State<CollectionView> {
 
   @override
   Widget build(BuildContext context) {
-    final list = f.listAPI().map( (f) {
-      return basename(f.path).replaceAll(".rest", "");
-    }).toList();
-
     return Container(
       width: 256,
       color: const Color(0xFF404040),
@@ -39,14 +41,14 @@ class _CollectionViewState extends State<CollectionView> {
           SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
-              itemCount: list.length,
+              itemCount: widget.listAPI.length,
               itemBuilder: (context, index) => ListTile(
                 leading: Icon(Icons.edit_note, color: Colors.blue, size: 24),
                 title: TextButton(
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      list.elementAt(index),
+                      widget.listAPI.elementAt(index),
                       style: TextStyle(color: Colors.white, fontSize: 13),
                     ),
                   ),
@@ -62,10 +64,7 @@ class _CollectionViewState extends State<CollectionView> {
   }
 
   Widget menu() {
-    String dropdownValue = "default";
-    final list = f.listCollection().map( (f) {
-      return basename(f.path);
-    }).toList();
+    var dropdownValue = 'default';
 
     return SizedBox(
       height: 36,
@@ -81,14 +80,16 @@ class _CollectionViewState extends State<CollectionView> {
                 dropdownValue = value!;
               });
             },
-            items: list.map<DropdownMenuItem<String>>((
+            items: widget.listFolder.map<DropdownMenuItem<String>>((
               String value,
             ) {
               return DropdownMenuItem<String>(value: value, child: Text(value));
             }).toList(),
           ),
           const Spacer(),
-          IconButton(icon: Icon(Icons.add, size: 24), onPressed: _newAPI),
+          IconButton(icon: Icon(Icons.create_new_folder, size: 24), onPressed: _newDirectory),
+          SizedBox(width: 9),
+          IconButton(icon: Icon(Icons.description, size: 24), onPressed: _newAPI),
           SizedBox(width: 16),
         ],
       ),

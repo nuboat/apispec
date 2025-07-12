@@ -1,4 +1,4 @@
-import 'package:apispec/features/home/presentation/environment_screen.dart';
+import 'package:apispec/features/home/presentation/env_screen.dart';
 import 'package:apispec/features/home/presentation/setting_screen.dart';
 import 'package:apispec/features/home/presentation/welcome_screen.dart';
 import 'package:apispec/features/home/presentation/workspace_screen.dart';
@@ -50,7 +50,7 @@ class _HomeState extends State<Home> {
             child: switch (activeScreen) {
               "Welcome" => WelcomeScreen(),
               "Workspace" => WorkspaceScreen(),
-              "Environment" => EnvironmentScreen(),
+              "Environment" => EnvScreen(),
               "Setting" => SettingScreen(),
               _ => WelcomeScreen(),
             },

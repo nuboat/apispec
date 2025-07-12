@@ -1,19 +1,20 @@
 /applications
     /[application name]
-        /collections
+        /api
             /[collection name]
                 /[apiname]
                     /[apiname].rest
                     /result
                         /[apiname]_[snapshot].rest
                         /[apiname]_[snapshot].result
-        /environments
+        /env
             /[env name].env
 
 for guest
 /applications
     /Personal
-        /collections
+        /api
             /default
                 /build_info.rest
-        /environments
+        /env
+            /default.env

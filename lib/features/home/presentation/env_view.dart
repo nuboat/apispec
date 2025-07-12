@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
 
-class EnvironmentView extends StatefulWidget {
-  const EnvironmentView({
+class EnvView extends StatefulWidget {
+  const EnvView({
     super.key,
-    required this.environments,
+    required this.envs,
     required this.reload,
   });
 
-  final List<String> environments;
+  final List<String> envs;
 
   final Function reload;
 
   @override
-  State<EnvironmentView> createState() => _EnvironmentViewState();
+  State<EnvView> createState() => _EnvViewState();
 }
 
-class _EnvironmentViewState extends State<EnvironmentView> {
+class _EnvViewState extends State<EnvView> {
+
   void _refresh() {
     widget.reload();
   }
@@ -28,18 +29,18 @@ class _EnvironmentViewState extends State<EnvironmentView> {
       child: Column(
         children: <Widget>[
           SizedBox(height: 8),
-          menu(),
+          header(),
           SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
-              itemCount: widget.environments.length,
+              itemCount: widget.envs.length,
               itemBuilder: (context, index) => ListTile(
                 leading: Icon(Icons.edit_note, color: Colors.blue, size: 24),
                 title: TextButton(
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.environments.elementAt(index),
+                      widget.envs.elementAt(index),
                       style: TextStyle(color: Colors.white, fontSize: 13),
                     ),
                   ),
@@ -54,7 +55,7 @@ class _EnvironmentViewState extends State<EnvironmentView> {
     );
   }
 
-  Widget menu() {
+  Widget header() {
     return SizedBox(
       height: 36,
       child: Row(
@@ -62,8 +63,6 @@ class _EnvironmentViewState extends State<EnvironmentView> {
           SizedBox(width: 16),
           Text("Environments", style: TextStyle(fontSize: 16)),
           const Spacer(),
-          IconButton(icon: Icon(Icons.refresh, size: 24), onPressed: _refresh),
-          SizedBox(width: 16),
         ],
       ),
     );

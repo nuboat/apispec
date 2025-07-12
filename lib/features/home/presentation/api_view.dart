@@ -4,12 +4,9 @@ import 'package:flutter/material.dart';
 
 class APIView extends StatefulWidget {
   const APIView({super.key
-    , required this.environments
-    , required this.reload});
+    , required this.envs});
 
-  final List<String> environments;
-
-  final Function reload;
+  final List<String> envs;
 
   @override
   State<APIView> createState() => _APIViewState();
@@ -20,7 +17,6 @@ class _APIViewState extends State<APIView> {
   bool plaintextMode = false;
 
   void _refresh() {
-    widget.reload();
   }
 
   @override
