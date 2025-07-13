@@ -1,34 +1,31 @@
+import 'package:apispec/features/home/controllers/env_controller.dart';
 import 'package:apispec/global.dart' as g;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class EnvEditView extends StatefulWidget {
-  const EnvEditView({super.key
-    , required this.raw
-    , required this.reload});
+  const EnvEditView({super.key, required this.envCtrl});
 
-  final String raw;
-
-  final Function reload;
+  final EnvController envCtrl;
 
   @override
   State<EnvEditView> createState() => _EnvEditViewState();
 }
 
 class _EnvEditViewState extends State<EnvEditView> {
-
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xFF666666),
-      child: Column(
-        children: <Widget>[
-          actionBar(),
-          Expanded(
-            child: editText()
-          ),
-        ],
-      ),
-    );
+    return Obx(() {
+      return Container(
+        color: const Color(0xFF666666),
+        child: Column(
+          children: <Widget>[
+            actionBar(),
+            Expanded(child: editText()),
+          ],
+        ),
+      );
+    });
   }
 
   Widget actionBar() {
@@ -53,7 +50,9 @@ class _EnvEditViewState extends State<EnvEditView> {
         fontSize: 13,
       ),
       decoration: const InputDecoration(border: InputBorder.none),
-      controller: TextEditingController(text: widget.raw),
+      controller: TextEditingController(
+        text: widget.envCtrl.envModel.value.rawJson,
+      ),
     );
   }
 }

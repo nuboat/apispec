@@ -3,28 +3,30 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 
 class EnvController extends GetxController {
-
   final envs = <String>[].obs;
-  EnvModel envModel = EnvModel();
+  final Rx<EnvModel> envModel = Rx<EnvModel>(EnvModel(rawJson: ""));
 
-  void loadEnv() {
-    envs.assignAll(f.listEnv().map((f) {
-      return basename(f.path).replaceAll(".json", "");
-    }).toList(),);
+  void loadEnvNames() {
+    envs.assignAll(
+      f.listEnv().map((f) {
+        return basename(f.path).replaceAll(".json", "");
+      }).toList(),
+    );
   }
 
   void buildEnvModel(String name) {
-    envModel = EnvModel();
+    envModel.value = EnvModel(rawJson: "{}");
   }
 
   @override
   void onInit() {
-    loadEnv();
+    loadEnvNames();
     super.onInit();
   }
-
 }
 
 class EnvModel {
-  final String raw = "";
+  final String rawJson;
+
+  EnvModel({required this.rawJson});
 }
