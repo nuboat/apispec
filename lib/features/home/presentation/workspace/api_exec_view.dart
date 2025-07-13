@@ -56,8 +56,7 @@ class _APIViewState extends State<APIView> {
   }
 
   Widget tabBarAPI() {
-    return Expanded(
-      child: DefaultTabController(
+    return DefaultTabController(
         initialIndex: 0,
         length: 6,
         child: Scaffold(
@@ -86,8 +85,7 @@ class _APIViewState extends State<APIView> {
             ],
           ),
         ),
-      ),
-    );
+      );
   }
 
   Widget responsePreview() {
