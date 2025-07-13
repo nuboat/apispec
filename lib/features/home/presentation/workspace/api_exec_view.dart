@@ -256,20 +256,15 @@ class _APIViewState extends State<APIView> {
 
   Widget btnSend() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      color: const Color(0xFF1E1E1E),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      // color: const Color(0xFF1E1E1E),
       child: Center(
         child: Row(
           children: [
-            Icon(Icons.play_arrow, color: Colors.blue, size: 16),
-            SizedBox(width: 8),
             TextButton(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Text(
-                  'Send',
-                  style: TextStyle(color: Colors.white, fontSize: 13),
-                ),
+                child: Icon(Icons.arrow_circle_right, color: Colors.blue, size: 24),
               ),
               onPressed: () => "",
             ),
