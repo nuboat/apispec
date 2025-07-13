@@ -34,8 +34,33 @@ class _EnvEditViewState extends State<EnvEditView> {
       color: const Color(0xFF000000),
       child: Row(
         children: [
-          // Add action Here
+          btnSave(),
         ],
+      ),
+    );
+  }
+
+  Widget btnSave() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      color: const Color(0xFF1E1E1E),
+      child: Center(
+        child: Row(
+          children: [
+            Icon(Icons.save, color: Colors.blue, size: 16),
+            SizedBox(width: 2),
+            TextButton(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'SAVE',
+                  style: TextStyle(color: Colors.white, fontSize: 13),
+                ),
+              ),
+              onPressed: () => "",
+            ),
+          ],
+        ),
       ),
     );
   }

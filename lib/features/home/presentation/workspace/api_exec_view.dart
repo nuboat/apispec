@@ -3,8 +3,7 @@ import 'package:apispec/mock.dart' as m;
 import 'package:flutter/material.dart';
 
 class APIView extends StatefulWidget {
-  const APIView({super.key
-    , required this.envs});
+  const APIView({super.key, required this.envs});
 
   final List<String> envs;
 
@@ -13,11 +12,9 @@ class APIView extends StatefulWidget {
 }
 
 class _APIViewState extends State<APIView> {
-
   bool plaintextMode = false;
 
-  void _refresh() {
-  }
+  void _refresh() {}
 
   @override
   Widget build(BuildContext context) {
@@ -95,22 +92,22 @@ class _APIViewState extends State<APIView> {
 
   Widget responsePreview() {
     return Container(
-        width: MediaQuery.sizeOf(context).width / 4,
-        padding: const EdgeInsets.all(0.0),
-        color: const Color(0xFF1E1E1E),
-        child: TextField(
-          enabled: false,
-          maxLines: null,
-          expands: true,
-          style: const TextStyle(
-            fontFamily: g.mainFont,
-            color: Colors.white,
-            fontSize: 13,
-          ),
-          decoration: const InputDecoration(border: InputBorder.none),
-          controller: TextEditingController(text: m.sampleResponse),
+      width: MediaQuery.sizeOf(context).width / 4,
+      padding: const EdgeInsets.all(0.0),
+      color: const Color(0xFF1E1E1E),
+      child: TextField(
+        enabled: false,
+        maxLines: null,
+        expands: true,
+        style: const TextStyle(
+          fontFamily: g.mainFont,
+          color: Colors.white,
+          fontSize: 13,
         ),
-      );
+        decoration: const InputDecoration(border: InputBorder.none),
+        controller: TextEditingController(text: m.sampleResponse),
+      ),
+    );
   }
 
   Widget textEditAPI() {
@@ -137,75 +134,104 @@ class _APIViewState extends State<APIView> {
   Widget textEditPreProcess() {
     return Column(
       children: <Widget>[
-        Expanded(child: TextField(
-          maxLines: null,
-          expands: true,
-          style: const TextStyle(
-            fontFamily: g.mainFont,
-            color: Colors.white,
-            fontSize: 13,
+        Expanded(
+          child: TextField(
+            maxLines: null,
+            expands: true,
+            style: const TextStyle(
+              fontFamily: g.mainFont,
+              color: Colors.white,
+              fontSize: 13,
+            ),
+            decoration: const InputDecoration(border: InputBorder.none),
+            controller: TextEditingController(text: "Pre Process"),
           ),
-          decoration: const InputDecoration(border: InputBorder.none),
-          controller: TextEditingController(text: "Pre Process"),
-        )),
+        ),
         textFooter(),
       ],
     );
   }
 
   Widget textEditPostProcess() {
-    return TextField(
-      maxLines: null,
-      expands: true,
-      style: const TextStyle(
-        fontFamily: g.mainFont,
-        color: Colors.white,
-        fontSize: 13,
-      ),
-      decoration: const InputDecoration(border: InputBorder.none),
-      controller: TextEditingController(text: "Post Process"),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: TextField(
+            maxLines: null,
+            expands: true,
+            style: const TextStyle(
+              fontFamily: g.mainFont,
+              color: Colors.white,
+              fontSize: 13,
+            ),
+            decoration: const InputDecoration(border: InputBorder.none),
+            controller: TextEditingController(text: "Post Process"),
+          ),
+        ),
+        textFooter(),
+      ],
     );
   }
 
   Widget textEditSpec() {
-    return TextField(
-      maxLines: null,
-      expands: true,
-      style: const TextStyle(
-        fontFamily: g.mainFont,
-        color: Colors.white,
-        fontSize: 13,
-      ),
-      decoration: const InputDecoration(border: InputBorder.none),
-      controller: TextEditingController(text: "Spec"),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: TextField(
+            maxLines: null,
+            expands: true,
+            style: const TextStyle(
+              fontFamily: g.mainFont,
+              color: Colors.white,
+              fontSize: 13,
+            ),
+            decoration: const InputDecoration(border: InputBorder.none),
+            controller: TextEditingController(text: "Spec"),
+          ),
+        ),
+        textFooter(),
+      ],
     );
   }
 
   Widget markdownDocument() {
-    return TextField(
-      maxLines: null,
-      expands: true,
-      style: const TextStyle(
-        fontFamily: g.mainFont,
-        color: Colors.white,
-        fontSize: 13,
-      ),
-      decoration: const InputDecoration(border: InputBorder.none),
-      controller: TextEditingController(text: "Markdown Document"),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: TextField(
+            maxLines: null,
+            expands: true,
+            style: const TextStyle(
+              fontFamily: g.mainFont,
+              color: Colors.white,
+              fontSize: 13,
+            ),
+            decoration: const InputDecoration(border: InputBorder.none),
+            controller: TextEditingController(text: "Markdown Document"),
+          ),
+        ),
+        textFooter(),
+      ],
     );
   }
 
   Widget settingAPI() {
-    return TextField(
-      maxLines: null,
-      expands: true,
-      style: const TextStyle(
-        fontFamily: g.mainFont,
-        color: Colors.white,
-        fontSize: 13,
-      ),
-      decoration: const InputDecoration(border: InputBorder.none),
-      controller: TextEditingController(text: "Setting"),
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: TextField(
+            maxLines: null,
+            expands: true,
+            style: const TextStyle(
+              fontFamily: g.mainFont,
+              color: Colors.white,
+              fontSize: 13,
+            ),
+            decoration: const InputDecoration(border: InputBorder.none),
+            controller: TextEditingController(text: "Setting"),
+          ),
+        ),
+      ],
     );
   }
 
@@ -213,21 +239,18 @@ class _APIViewState extends State<APIView> {
     return Center(
       child: Row(
         children: [
-          Text(
-            'Plain ',
-            style: TextStyle(color: Colors.white, fontSize: 13),
-          ),
+          Text('Plain ', style: TextStyle(color: Colors.white, fontSize: 13)),
           Switch(
-          // This bool value toggles the switch.
-          value: plaintextMode,
-          activeColor: Colors.teal,
-          onChanged: (bool value) {
-            // This is called when the user toggles the switch.
-            setState(() {
-              plaintextMode = value;
-            });
-          },
-        ),
+            // This bool value toggles the switch.
+            value: plaintextMode,
+            activeColor: Colors.teal,
+            onChanged: (bool value) {
+              // This is called when the user toggles the switch.
+              setState(() {
+                plaintextMode = value;
+              });
+            },
+          ),
         ],
       ),
     );
@@ -287,7 +310,7 @@ class _APIViewState extends State<APIView> {
       underline: Container(height: 0),
       onChanged: (String? value) {
         // Save to Clipboard
-        setState(() {  });
+        setState(() {});
       },
       items: list.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(value: value, child: Text(value));
@@ -325,5 +348,4 @@ class _APIViewState extends State<APIView> {
       ),
     );
   }
-
 }

@@ -1,7 +1,7 @@
-import 'package:apispec/features/home/presentation/env_screen.dart';
+import 'package:apispec/features/home/presentation/environment/env_screen.dart';
 import 'package:apispec/features/home/presentation/setting_screen.dart';
 import 'package:apispec/features/home/presentation/welcome_screen.dart';
-import 'package:apispec/features/home/presentation/workspace_screen.dart';
+import 'package:apispec/features/home/presentation/workspace/workspace_screen.dart';
 import 'package:apispec/features/login/presentation/authen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

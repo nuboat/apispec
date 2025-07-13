@@ -1,26 +1,16 @@
+import 'package:apispec/features/home/controllers/folder_controller.dart';
 import 'package:flutter/material.dart';
 
-class FolderView extends StatefulWidget {
-  const FolderView({
-    super.key,
-    required this.listAPI,
-    required this.loadAPI,
-    required this.listFolder,
-    required this.loadFolder,
-  });
+class APIListView extends StatefulWidget {
+  const APIListView({super.key, required this.folderCtrl});
 
-  final List<String> listAPI;
-  final List<String> listFolder;
-
-  final Function loadAPI;
-  final Function loadFolder;
+  final FolderController folderCtrl;
 
   @override
-  State<FolderView> createState() => _FolderViewState();
+  State<APIListView> createState() => _APIListViewState();
 }
 
-class _FolderViewState extends State<FolderView> {
-
+class _APIListViewState extends State<APIListView> {
   void _newDirectory() {
     //
   }
@@ -41,14 +31,14 @@ class _FolderViewState extends State<FolderView> {
           SizedBox(height: 8),
           Expanded(
             child: ListView.builder(
-              itemCount: widget.listAPI.length,
+              itemCount: widget.folderCtrl.apis.length,
               itemBuilder: (context, index) => ListTile(
                 leading: Icon(Icons.edit_note, color: Colors.blue, size: 24),
                 title: TextButton(
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      widget.listAPI.elementAt(index),
+                      widget.folderCtrl.folders.elementAt(index),
                       style: TextStyle(color: Colors.white, fontSize: 13),
                     ),
                   ),
@@ -80,17 +70,18 @@ class _FolderViewState extends State<FolderView> {
                 dropdownValue = value!;
               });
             },
-            items: widget.listFolder.map<DropdownMenuItem<String>>((
+            items: widget.folderCtrl.folders.map<DropdownMenuItem<String>>((
               String value,
             ) {
               return DropdownMenuItem<String>(value: value, child: Text(value));
             }).toList(),
           ),
           const Spacer(),
-          IconButton(icon: Icon(Icons.create_new_folder, size: 24), onPressed: _newDirectory),
-          SizedBox(width: 9),
-          IconButton(icon: Icon(Icons.description, size: 24), onPressed: _newAPI),
-          SizedBox(width: 16),
+          IconButton(
+            icon: Icon(Icons.create_new_folder, size: 24),
+            onPressed: _newDirectory,
+          ),
+          IconButton(icon: Icon(Icons.post_add, size: 24), onPressed: _newAPI),
         ],
       ),
     );

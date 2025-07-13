@@ -3,19 +3,26 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 
 class EnvController extends GetxController {
+
+  String _activeEnv = "";
   final envs = <String>[].obs;
   final Rx<EnvModel> envModel = Rx<EnvModel>(EnvModel(rawJson: ""));
 
   void loadEnvNames() {
-    envs.assignAll(
-      f.listEnv().map((f) {
-        return basename(f.path).replaceAll(".json", "");
-      }).toList(),
-    );
+    final list = f.listEnv().map((f) {
+      return basename(f.path).replaceAll(".json", "");
+    }).toList();
+    list.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    envs.assignAll(list);
   }
 
   void buildEnvModel(String name) {
+    _activeEnv = name;
     envModel.value = EnvModel(rawJson: "{}");
+  }
+
+  bool isActive(String name) {
+    return _activeEnv == name;
   }
 
   @override

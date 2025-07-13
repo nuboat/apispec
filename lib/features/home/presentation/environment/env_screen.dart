@@ -1,6 +1,6 @@
 import 'package:apispec/features/home/controllers/env_controller.dart';
-import 'package:apispec/features/home/presentation/env_edit_view.dart';
-import 'package:apispec/features/home/presentation/env_list_view.dart';
+import 'package:apispec/features/home/presentation/environment/env_edit_view.dart';
+import 'package:apispec/features/home/presentation/environment/env_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

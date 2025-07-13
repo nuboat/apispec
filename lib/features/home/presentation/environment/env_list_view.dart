@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:apispec/features/home/controllers/env_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,14 @@ class EnvListView extends StatefulWidget {
 }
 
 class _EnvListViewState extends State<EnvListView> {
+
+  void _editFile(String name) {
+    setState(() {
+      // refresh screen;
+    });
+    widget.envCtrl.buildEnvModel(name);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -26,22 +36,30 @@ class _EnvListViewState extends State<EnvListView> {
             child: Obx(
               () => ListView.builder(
                 itemCount: widget.envCtrl.envs.length,
-                itemBuilder: (context, index) => ListTile(
-                  leading: Icon(Icons.edit_note, color: Colors.blue, size: 24),
-                  title: TextButton(
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        widget.envCtrl.envs.elementAt(index),
-                        style: TextStyle(color: Colors.white, fontSize: 13),
+                itemBuilder: (context, index) {
+                  final env = widget.envCtrl.envs.elementAt(index);
+                  final isSelected = widget.envCtrl.isActive(env);
+
+                  return ListTile(
+                    leading: Icon(
+                      Icons.edit_note,
+                      color: Colors.blue,
+                      size: 24,
+                    ),
+                    title: TextButton(
+                      onPressed: isSelected ? null : () => _editFile(env),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          env,
+                          style: isSelected ? TextStyle(color: Colors.green, fontSize: 16) : TextStyle(color: Colors.white, fontSize: 16),
+                        ),
                       ),
                     ),
-                    onPressed: () => widget.envCtrl.buildEnvModel(
-                      widget.envCtrl.envs.elementAt(index),
-                    ),
-                  ),
-                  dense: true,
-                ),
+                    dense: true,
+                    tileColor: isSelected ? Colors.grey : null,
+                  );
+                },
               ),
             ),
           ),
