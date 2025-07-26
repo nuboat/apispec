@@ -1,4 +1,4 @@
-import 'package:apispec/features/home/controllers/folder_controller.dart';
+import 'package:apispec/features/workspace/controller/folder_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

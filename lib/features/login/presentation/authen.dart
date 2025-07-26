@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:apispec/core/common/date_facade.dart' as d;
 import 'package:apispec/core/data/api_facade.dart' as a;
 import 'package:apispec/core/data/base.dart' as b;
-import 'package:apispec/features/home/presentation/home.dart';
+import 'package:apispec/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -19,7 +19,7 @@ class _AuthenState extends State<Authen> {
   final TextEditingController _passwordController = TextEditingController();
 
   void _authen() {
-    Get.to(() => Home(mode: "1"));
+    Get.to(() => HomeScreen(mode: "1"));
   }
 
   void _guest() {
@@ -40,7 +40,7 @@ class _AuthenState extends State<Authen> {
       }
     });
 
-    Get.to(() => Home(mode: "1")); // assume guest
+    Get.to(() => HomeScreen(mode: "1")); // assume guest
   }
 
   @override

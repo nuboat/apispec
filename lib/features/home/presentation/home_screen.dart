@@ -1,13 +1,13 @@
-import 'package:apispec/features/home/presentation/environment/env_screen.dart';
-import 'package:apispec/features/home/presentation/setting_screen.dart';
-import 'package:apispec/features/home/presentation/welcome_screen.dart';
-import 'package:apispec/features/home/presentation/workspace/workspace_screen.dart';
+import 'package:apispec/features/environment/presentation/env_screen.dart';
+import 'package:apispec/features/setting/presentation/setting_screen.dart';
+import 'package:apispec/features/welcome/presentation/welcome_screen.dart';
+import 'package:apispec/features/workspace/presentation/workspace_screen.dart';
 import 'package:apispec/features/login/presentation/authen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Home extends StatefulWidget {
-  const Home({
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({
     super.key,
     required this.mode,
   });
@@ -15,10 +15,10 @@ class Home extends StatefulWidget {
   final String mode;
 
   @override
-  State<Home> createState() => _HomeState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeState extends State<Home> {
+class _HomeScreenState extends State<HomeScreen> {
 
   var activeScreen = "Welcome";
 
