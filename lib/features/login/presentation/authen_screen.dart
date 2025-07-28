@@ -7,14 +7,14 @@ import 'package:apispec/features/home/presentation/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Authen extends StatefulWidget {
-  const Authen({super.key});
+class AuthenScreen extends StatefulWidget {
+  const AuthenScreen({super.key});
 
   @override
-  State<Authen> createState() => _AuthenState();
+  State<AuthenScreen> createState() => _AuthenScreenState();
 }
 
-class _AuthenState extends State<Authen> {
+class _AuthenScreenState extends State<AuthenScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 

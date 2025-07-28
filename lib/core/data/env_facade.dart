@@ -20,6 +20,17 @@ File loadFile(String name) {
   return File('${_folderPath()}/$name.json');
 }
 
+void createFile(String name) {
+  final file = loadFile(name);
+  try {
+    file.writeAsStringSync("""
+{
+}""", flush: true);
+  } catch (e) {
+    throw Exception('Failed to create file: $e'); // Re-throw or handle
+  }
+}
+
 Future<File> writeDataToFile(String name, String data) async {
   final file = loadFile(name);
   try {
@@ -30,6 +41,7 @@ Future<File> writeDataToFile(String name, String data) async {
 }
 
 List<FileSystemEntity> listEnv() {
-  return Directory(_folderPath()).listSync()
-      .where((f) => f.path.toLowerCase().endsWith(".json")).toList();
+  return Directory(
+    _folderPath(),
+  ).listSync().where((f) => f.path.toLowerCase().endsWith(".json")).toList();
 }

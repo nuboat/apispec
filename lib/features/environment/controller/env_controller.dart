@@ -1,6 +1,7 @@
 import 'package:apispec/core/data/env_facade.dart' as f;
 import 'package:get/get.dart';
 import 'package:path/path.dart';
+import 'dart:io';
 
 class EnvController extends GetxController {
 
@@ -20,6 +21,14 @@ class EnvController extends GetxController {
   void loadEnvModel(String name) {
     activeEnv.value = name;
     envModel.value = EnvModel(rawJson: f.readEnv(activeEnv.value));
+  }
+
+  void createEnv(String name) {
+    if (envs.where((f) => f == name).isNotEmpty) {
+      return;
+    }
+    f.createFile(name);
+    loadEnvLists();
   }
 
   void writeEnv(String data) {

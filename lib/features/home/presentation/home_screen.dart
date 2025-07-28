@@ -2,7 +2,7 @@ import 'package:apispec/features/environment/presentation/env_screen.dart';
 import 'package:apispec/features/setting/presentation/setting_screen.dart';
 import 'package:apispec/features/welcome/presentation/welcome_screen.dart';
 import 'package:apispec/features/workspace/presentation/workspace_screen.dart';
-import 'package:apispec/features/login/presentation/authen.dart';
+import 'package:apispec/features/login/presentation/authen_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -114,7 +114,7 @@ class _HomeScreenState extends State<HomeScreen> {
       color: Colors.grey,
       onPressed: () {
         setState(() {
-          Get.to(() => Authen());
+          Get.to(() => AuthenScreen());
         });
       },
     );

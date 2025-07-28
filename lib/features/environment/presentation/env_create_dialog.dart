@@ -22,6 +22,7 @@ class _EnvCreateDialogState extends State<EnvCreateDialog> {
 
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
       title: Text("Create New Environment"),
       content: SingleChildScrollView(
@@ -50,7 +51,7 @@ class _EnvCreateDialogState extends State<EnvCreateDialog> {
           onPressed: () {
             String environmentName = _textController.text;
             if (environmentName.isNotEmpty) {
-              print("New Environment Name: $environmentName");
+              widget.envCtrl.createEnv(_textController.text);
               Navigator.of(context).pop();
               _textController.clear();
             } else {
