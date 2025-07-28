@@ -4,11 +4,12 @@ import 'package:path/path.dart';
 
 class EnvController extends GetxController {
 
-  String _activeEnv = "";
-  final envs = <String>[].obs;
-  final Rx<EnvModel> envModel = Rx<EnvModel>(EnvModel(rawJson: ""));
+  late final Rx<EnvModel> envModel;
 
-  void loadEnvNames() {
+  final envs = <String>[].obs;
+  final RxString activeEnv = RxString("");
+
+  void loadEnvLists() {
     final list = f.listEnv().map((f) {
       return basename(f.path).replaceAll(".json", "");
     }).toList();
@@ -16,18 +17,28 @@ class EnvController extends GetxController {
     envs.assignAll(list);
   }
 
-  void buildEnvModel(String name) {
-    _activeEnv = name;
-    envModel.value = EnvModel(rawJson: "{}");
+  void loadEnvModel(String name) {
+    activeEnv.value = name;
+    envModel.value = EnvModel(rawJson: f.readEnv(activeEnv.value));
+  }
+
+  void writeEnv(String data) {
+    try {
+      f.writeDataToFile(activeEnv.value, data.trim());
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   bool isActive(String name) {
-    return _activeEnv == name;
+    return activeEnv.value == name;
   }
 
   @override
   void onInit() {
-    loadEnvNames();
+    loadEnvLists();
+    activeEnv.value = (f.hasEnv("default.json")) ? "default" : envs.value.elementAt(0);
+    envModel = EnvModel(rawJson: f.readEnv(activeEnv.value)).obs;
     super.onInit();
   }
 }

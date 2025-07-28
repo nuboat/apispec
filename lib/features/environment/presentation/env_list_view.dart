@@ -1,6 +1,5 @@
-import 'dart:ffi';
-
 import 'package:apispec/features/environment/controller/env_controller.dart';
+import 'package:apispec/features/environment/presentation/env_create_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,11 +14,20 @@ class EnvListView extends StatefulWidget {
 
 class _EnvListViewState extends State<EnvListView> {
 
-  void _editFile(String name) {
+  void _changeFile(String name) {
+    widget.envCtrl.loadEnvModel(name);
     setState(() {
-      // refresh screen;
+
     });
-    widget.envCtrl.buildEnvModel(name);
+  }
+
+  void _createENV() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return EnvCreateDialog(envCtrl: widget.envCtrl,);
+      },
+    );
   }
 
   @override
@@ -39,6 +47,7 @@ class _EnvListViewState extends State<EnvListView> {
                 itemBuilder: (context, index) {
                   final env = widget.envCtrl.envs.elementAt(index);
                   final isSelected = widget.envCtrl.isActive(env);
+                  // print("$env: $isSelected");
 
                   return ListTile(
                     leading: Icon(
@@ -47,7 +56,7 @@ class _EnvListViewState extends State<EnvListView> {
                       size: 24,
                     ),
                     title: TextButton(
-                      onPressed: isSelected ? null : () => _editFile(env),
+                      onPressed: isSelected ? null : () => _changeFile(env),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -76,6 +85,8 @@ class _EnvListViewState extends State<EnvListView> {
           SizedBox(width: 16),
           Text("Environments", style: TextStyle(fontSize: 16)),
           const Spacer(),
+          IconButton(icon: Icon(Icons.post_add, size: 24), onPressed: _createENV),
+          SizedBox(width: 8),
         ],
       ),
     );

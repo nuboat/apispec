@@ -9,7 +9,9 @@ String _folderPath() {
 }
 
 String workPath() {
-  return  "${_folderPath()}/${b.folder}/";
+  final path = "${_folderPath()}/${b.folder}/";
+  print("workPath: $path");
+  return path;
 }
 
 List<FileSystemEntity> listFolder() {
@@ -20,3 +22,4 @@ List<FileSystemEntity> listAPI() {
   return Directory(_folderPath() + b.folder).listSync()
       .where((f) => f.path.toLowerCase().endsWith(".rest")).toList();
 }
+
