@@ -15,7 +15,9 @@ class EnvListView extends StatefulWidget {
 class _EnvListViewState extends State<EnvListView> {
 
   void _changeFile(String name) {
+
     widget.envCtrl.loadEnvModel(name);
+
     setState(() {
 
     });

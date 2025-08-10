@@ -1,5 +1,5 @@
 import 'package:apispec/features/environment/controller/env_controller.dart';
-import 'package:apispec/features/workspace/controller/folder_controller.dart';
+import 'package:apispec/features/workspace/controller/workspace_controller.dart';
 import 'package:apispec/features/workspace/presentation/api_exec_view.dart';
 import 'package:apispec/features/workspace/presentation/api_list_view.dart';
 import 'package:flutter/material.dart';
@@ -17,14 +17,14 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
   Widget build(BuildContext context) {
 
     final envCtrl = Get.put(EnvController());
-    final folderCtrl = Get.put(FolderController());
+    final workspaceCtrl = Get.put(WorkspaceController());
 
     return SizedBox(
       width: 208,
       child: Row(
         children: <Widget>[
-          APIListView(folderCtrl: folderCtrl),
-          Expanded(child: APIView(envs: envCtrl.envs)),
+          APIListView(workspaceCtrl: workspaceCtrl),
+          Expanded(child: APIView(workspaceCtrl: workspaceCtrl, envs: envCtrl.envs)),
         ],
       ),
     );

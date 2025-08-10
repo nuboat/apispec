@@ -1,17 +1,18 @@
-import 'package:apispec/features/workspace/controller/folder_controller.dart';
+import 'package:apispec/features/workspace/controller/workspace_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class APIListView extends StatefulWidget {
-  const APIListView({super.key, required this.folderCtrl});
+  const APIListView({super.key, required this.workspaceCtrl});
 
-  final FolderController folderCtrl;
+  final WorkspaceController workspaceCtrl;
 
   @override
   State<APIListView> createState() => _APIListViewState();
 }
 
 class _APIListViewState extends State<APIListView> {
+
   void _newDirectory() {
     //
   }
@@ -20,11 +21,14 @@ class _APIListViewState extends State<APIListView> {
     //
   }
 
-  void _activeAPI(String apiName) {
-    setState(() {
-      // refresh screen;
-    });
-    widget.folderCtrl.switchFile(apiName);
+  void _changeFolder(String name) {
+    widget.workspaceCtrl.loadAPIs(name);
+    setState(() {});
+  }
+
+  void _changeAPI(String apiName) {
+    widget.workspaceCtrl.changeAPI(apiName);
+    setState(() {});
   }
 
   @override
@@ -40,10 +44,10 @@ class _APIListViewState extends State<APIListView> {
           Expanded(
             child: Obx(
               () => ListView.builder(
-                itemCount: widget.folderCtrl.apis.length,
+                itemCount: widget.workspaceCtrl.apis.length,
                 itemBuilder: (context, index) {
-                  final apiName = widget.folderCtrl.apis.elementAt(index);
-                  final isSelected = widget.folderCtrl.isActiveFile(apiName);
+                  final apiName = widget.workspaceCtrl.apis.elementAt(index);
+                  final isSelected = widget.workspaceCtrl.isActiveAPI(apiName);
 
                   return ListTile(
                     leading: Icon(
@@ -52,7 +56,7 @@ class _APIListViewState extends State<APIListView> {
                       size: 32,
                     ),
                     title: TextButton(
-                      onPressed: isSelected ? null : () => _activeAPI(apiName),
+                      onPressed: isSelected ? null : () => _changeAPI(apiName),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -76,8 +80,6 @@ class _APIListViewState extends State<APIListView> {
   }
 
   Widget menu() {
-    var dropdownValue = 'default';
-
     return SizedBox(
       height: 36,
       child: Row(
@@ -89,15 +91,13 @@ class _APIListViewState extends State<APIListView> {
           ),
           SizedBox(width: 8),
           DropdownButton<String>(
-            value: dropdownValue,
+            value: widget.workspaceCtrl.activeFolder.value,
             style: const TextStyle(color: Colors.green, fontSize: 16),
             underline: Container(height: 0),
             onChanged: (String? value) {
-              setState(() {
-                dropdownValue = value!;
-              });
+              _changeFolder(value!);
             },
-            items: widget.folderCtrl.folders.map<DropdownMenuItem<String>>((
+            items: widget.workspaceCtrl.folders.map<DropdownMenuItem<String>>((
               String value,
             ) {
               return DropdownMenuItem<String>(value: value, child: Text(value));

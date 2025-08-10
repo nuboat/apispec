@@ -1,11 +1,13 @@
+import 'package:apispec/features/workspace/controller/workspace_controller.dart';
 import 'package:apispec/global.dart' as g;
 import 'package:apispec/mock.dart' as m;
 import 'package:flutter/material.dart';
 
 class APIView extends StatefulWidget {
-  const APIView({super.key, required this.envs});
+  const APIView({super.key, required this.workspaceCtrl, required this.envs});
 
   final List<String> envs;
+  final WorkspaceController workspaceCtrl;
 
   @override
   State<APIView> createState() => _APIViewState();

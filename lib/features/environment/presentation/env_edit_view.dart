@@ -16,7 +16,6 @@ class EnvEditView extends StatefulWidget {
 }
 
 class _EnvEditViewState extends State<EnvEditView> {
-  final RxBool _hasChanged = false.obs;
   late final TextEditingController _editor;
 
   void _remove() {
@@ -24,7 +23,7 @@ class _EnvEditViewState extends State<EnvEditView> {
   }
 
   void _save() {
-    if (!_hasChanged.value) {
+    if (!widget.envCtrl.envModel.value.hasChange()) {
       return;
     }
     try {
@@ -40,6 +39,7 @@ class _EnvEditViewState extends State<EnvEditView> {
         context,
       ).showSnackBar(SnackBar(content: Text("System Error: ${e.toString()}")));
     }
+    setState(() {});
   }
 
   @override
@@ -64,10 +64,10 @@ class _EnvEditViewState extends State<EnvEditView> {
         children: <Widget>[
           actionBar(),
           Obx(() {
-            final String controllerJson = widget.envCtrl.envModel.value.rawJson;
-            if (_editor.text != controllerJson) {
+            final String processJson = widget.envCtrl.envModel.value.processJson;
+            if (_editor.text != processJson) {
               _editor.removeListener(_onEditorTextChanged);
-              _editor.text = controllerJson;
+              _editor.text = processJson;
               _editor.addListener(_onEditorTextChanged);
             }
 
@@ -108,9 +108,9 @@ class _EnvEditViewState extends State<EnvEditView> {
                   () => Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      (_hasChanged.value) ? "Save **" : "Save",
+                      (widget.envCtrl.envModel.value.hasChange()) ? "Save **" : "Save",
                       style: TextStyle(
-                        color: (_hasChanged.value)
+                        color: (widget.envCtrl.envModel.value.hasChange())
                             ? Colors.redAccent
                             : Colors.white,
                         fontSize: 13,
@@ -159,7 +159,9 @@ class _EnvEditViewState extends State<EnvEditView> {
   }
 
   void _onEditorTextChanged() {
-    _hasChanged.value =
-        _editor.text.trim() != widget.envCtrl.envModel.value.rawJson.trim();
+    if (_editor.text != widget.envCtrl.envModel.value.processJson) {
+      widget.envCtrl.saveBuffer(_editor.text);
+    }
   }
+
 }
