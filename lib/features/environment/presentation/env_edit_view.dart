@@ -23,7 +23,7 @@ class _EnvEditViewState extends State<EnvEditView> {
   }
 
   void _save() {
-    if (!widget.envCtrl.envModel.value.hasChange()) {
+    if (!widget.envCtrl.activeHasChange()) {
       return;
     }
     try {
@@ -64,7 +64,7 @@ class _EnvEditViewState extends State<EnvEditView> {
         children: <Widget>[
           actionBar(),
           Obx(() {
-            final String processJson = widget.envCtrl.envModel.value.processJson;
+            final String processJson = widget.envCtrl.activeEnv.value.jsonProcess;
             if (_editor.text != processJson) {
               _editor.removeListener(_onEditorTextChanged);
               _editor.text = processJson;
@@ -108,9 +108,9 @@ class _EnvEditViewState extends State<EnvEditView> {
                   () => Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      (widget.envCtrl.envModel.value.hasChange()) ? "Save **" : "Save",
+                      (widget.envCtrl.activeHasChange()) ? "Save **" : "Save",
                       style: TextStyle(
-                        color: (widget.envCtrl.envModel.value.hasChange())
+                        color: (widget.envCtrl.activeHasChange())
                             ? Colors.redAccent
                             : Colors.white,
                         fontSize: 13,
@@ -159,7 +159,7 @@ class _EnvEditViewState extends State<EnvEditView> {
   }
 
   void _onEditorTextChanged() {
-    if (_editor.text != widget.envCtrl.envModel.value.processJson) {
+    if (_editor.text != widget.envCtrl.activeEnv.value.jsonProcess) {
       widget.envCtrl.saveBuffer(_editor.text);
     }
   }

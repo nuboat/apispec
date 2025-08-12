@@ -13,15 +13,11 @@ bool hasFolder(String name) {
 }
 
 bool hasAPI(String folder, String name) {
-  return File('${_folderPath()}$folder/$name/api.rest').existsSync();
+  return File('${_folderPath()}$folder/$name/request.rest').existsSync();
 }
 
-String readAPI(String folder, String name) {
-  return File('${_folderPath()}$folder/$name/api.rest').readAsStringSync();
-}
-
-String readResult(String folder, String name) {
-  return File('${_folderPath()}$folder/$name/api.result').readAsStringSync();
+String readAPI(String folder, String name, String part) {
+  return File('${_folderPath()}$folder/$name/$part').readAsStringSync();
 }
 
 File readResponse(String name) {

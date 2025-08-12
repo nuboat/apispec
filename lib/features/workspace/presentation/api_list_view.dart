@@ -22,7 +22,7 @@ class _APIListViewState extends State<APIListView> {
   }
 
   void _changeFolder(String name) {
-    widget.workspaceCtrl.loadAPIs(name);
+    widget.workspaceCtrl.changeFolder(name);
     setState(() {});
   }
 

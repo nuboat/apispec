@@ -1,20 +1,16 @@
+Data Structure.
+
 /applications
-    /[application name]
+    /[application name], personal 
         /api
-            /[collection name]
-                /[apiname]
-                    /[apiname].rest
-                    /result
-                        /[apiname]_[snapshot].rest
-                        /[apiname]_[snapshot].result
+            /[collection name], default
+                /[apiname], build_info
+                    /request.rest
+                    /response.txt
+                    /config.json
+                    /doc.md
+                    /post.js
+                    /pre.js
+                    /spec.js
         /env
             /[env name].env
-
-for guest
-/applications
-    /Personal
-        /api
-            /default
-                /build_info.rest
-        /env
-            /default.env

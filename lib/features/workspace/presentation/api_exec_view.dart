@@ -1,12 +1,13 @@
+import 'package:apispec/features/environment/controller/env_controller.dart';
 import 'package:apispec/features/workspace/controller/workspace_controller.dart';
 import 'package:apispec/global.dart' as g;
 import 'package:apispec/mock.dart' as m;
 import 'package:flutter/material.dart';
 
 class APIView extends StatefulWidget {
-  const APIView({super.key, required this.workspaceCtrl, required this.envs});
+  const APIView({super.key, required this.workspaceCtrl, required this.envCtrl});
 
-  final List<String> envs;
+  final EnvController envCtrl;
   final WorkspaceController workspaceCtrl;
 
   @override
@@ -14,10 +15,6 @@ class APIView extends StatefulWidget {
 }
 
 class _APIViewState extends State<APIView> {
-  bool plaintextMode = false;
-
-  void _refresh() {}
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -236,6 +233,7 @@ class _APIViewState extends State<APIView> {
   }
 
   Widget switchEditMode() {
+    final plaintextMode = false;
     return Center(
       child: Row(
         children: [
@@ -247,7 +245,7 @@ class _APIViewState extends State<APIView> {
             onChanged: (bool value) {
               // This is called when the user toggles the switch.
               setState(() {
-                plaintextMode = value;
+
               });
             },
           ),
@@ -277,19 +275,20 @@ class _APIViewState extends State<APIView> {
   }
 
   Widget dropdownEnvironment() {
-    var dropdownValue = 'No Env';
-    final list = <String>['No Env', 'SIT', 'UAT', 'Production'];
+    if (widget.workspaceCtrl.activeEnv.value == "") {
+      widget.workspaceCtrl.activeEnv.value = widget.envCtrl.envs.first;
+    }
     return DropdownButton<String>(
-      value: dropdownValue,
+      value: widget.workspaceCtrl.activeEnv.value,
       icon: const Icon(Icons.data_object),
       style: const TextStyle(color: Colors.white),
       underline: Container(height: 0),
       onChanged: (String? value) {
         setState(() {
-          dropdownValue = value!;
+          widget.workspaceCtrl.activeEnv.value = value!;
         });
       },
-      items: list.map<DropdownMenuItem<String>>((String value) {
+      items: widget.envCtrl.envs.value.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(value: value, child: Text(value));
       }).toList(),
     );

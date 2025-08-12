@@ -16,7 +16,7 @@ class _EnvListViewState extends State<EnvListView> {
 
   void _changeFile(String name) {
 
-    widget.envCtrl.loadEnvModel(name);
+    widget.envCtrl.changeEnv(name);
 
     setState(() {
 
@@ -49,7 +49,6 @@ class _EnvListViewState extends State<EnvListView> {
                 itemBuilder: (context, index) {
                   final env = widget.envCtrl.envs.elementAt(index);
                   final isSelected = widget.envCtrl.isActive(env);
-                  // print("$env: $isSelected");
 
                   return ListTile(
                     leading: Icon(

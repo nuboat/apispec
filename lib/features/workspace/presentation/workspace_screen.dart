@@ -24,7 +24,7 @@ class _WorkspaceScreenState extends State<WorkspaceScreen> {
       child: Row(
         children: <Widget>[
           APIListView(workspaceCtrl: workspaceCtrl),
-          Expanded(child: APIView(workspaceCtrl: workspaceCtrl, envs: envCtrl.envs)),
+          Expanded(child: APIView(workspaceCtrl: workspaceCtrl, envCtrl: envCtrl)),
         ],
       ),
     );

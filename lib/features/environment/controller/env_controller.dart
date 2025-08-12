@@ -5,43 +5,31 @@ import 'package:get/get.dart';
 import 'package:path/path.dart';
 
 class EnvController extends GetxController {
-
   final envs = <String>[].obs;
+  final Map<String, EnvModel> _buffer = HashMap();
 
-  late final RxString activeEnv;
-  late final Rx<EnvModel> envModel;
+  late final Rx<EnvModel> activeEnv;
 
-  final Map<String, EnvModel> buffer = HashMap();
-
-  @override
-  void onInit() {
-    loadEnvList();
-    activeEnv = ((f.hasEnv("default.json")) ? "default" : envs.value.elementAt(0)).obs;
-
-    final data = f.readEnv(activeEnv.value);
-    envModel = EnvModel(rawJson: f.readEnv(activeEnv.value), processJson: data).obs;
-    buffer[activeEnv.value] = envModel.value;
-
-    super.onInit();
+  bool activeHasChange() {
+    return activeEnv.value.hasChange();
   }
 
-  void loadEnvList() {
-    final list = f.listEnv().map((f) {
-      return basename(f.path).replaceAll(".json", "");
-    }).toList();
-    list.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
-    envs.assignAll(list);
+  String activeName() {
+    return activeEnv.value.name;
   }
 
-  void loadEnvModel(String name) {
-    activeEnv.value = name;
-
-    envModel.value = buffer.putIfAbsent(name, () => EnvModel(rawJson: "", processJson: ""));
+  void changeEnv(String name) {
+    if (_buffer.containsKey(name)) {
+      activeEnv.value = _buffer[name]!;
+    } else {
+      activeEnv.value = _loadEnv(name);
+      _buffer[name] = activeEnv.value;
+    }
   }
 
-  void saveBuffer(String data) {
-    envModel.value = EnvModel(rawJson: envModel.value.rawJson, processJson: data);
-    buffer[activeEnv.value] = envModel.value;
+  void saveBuffer(String jsonProcess) {
+    activeEnv.value = activeEnv.value.copy(jsonProcess: jsonProcess);
+    _buffer[activeEnv.value.name] = activeEnv.value;
   }
 
   void createEnv(String name) {
@@ -49,32 +37,77 @@ class EnvController extends GetxController {
       return;
     }
     f.createFile(name);
-    loadEnvList();
+    _loadEnvList();
   }
 
-  void writeEnv(String data) {
+  void writeEnv(String jsonProcess) {
     try {
-      f.writeDataToFile(activeEnv.value, data);
-      envModel.value = EnvModel(rawJson: data, processJson: data);
-      buffer[activeEnv.value] = envModel.value;
+      f.writeDataToFile(activeEnv.value.name, jsonProcess);
+      activeEnv.value = activeEnv.value.copy(
+        jsonRaw: jsonProcess,
+        jsonProcess: jsonProcess,
+      );
+      _buffer[activeEnv.value.name] = activeEnv.value;
     } catch (e) {
       print(e.toString());
     }
   }
 
   bool isActive(String name) {
-    return activeEnv.value == name;
+    return activeEnv.value.name == name;
+  }
+
+  @override
+  void onInit() {
+    envs.assignAll(_loadEnvList());
+    final activeEnvName = (f.hasEnv("default.json"))
+        ? "default"
+        : envs.value.elementAt(0);
+    activeEnv = _loadEnv(activeEnvName).obs;
+    _buffer[activeEnvName] = activeEnv.value;
+
+    super.onInit();
+  }
+
+  List<String> _loadEnvList() {
+    final list = f.listEnv().map((f) {
+      return basename(f.path).replaceAll(".json", "");
+    }).toList();
+    list.sort((a, b) => a.toLowerCase().compareTo(b.toLowerCase()));
+    return list;
+  }
+
+  EnvModel _loadEnv(String name) {
+    return EnvModel(
+        name: name,
+        jsonRaw: f.readEnv(name)
+    );
   }
 
 }
 
 class EnvModel {
-  final String rawJson;
-  final String processJson;
-
-  EnvModel({required this.rawJson, required this.processJson});
+  final String name;
+  final String jsonRaw;
+  late final String jsonProcess;
 
   bool hasChange() {
-    return rawJson.trim() != processJson.trim();
+    return jsonRaw.trim() != jsonProcess.trim();
+  }
+
+  EnvModel({
+    required this.name,
+    required this.jsonRaw,
+    String? jsonProcess,
+  }) {
+    this.jsonProcess = jsonRaw;
+  }
+
+  EnvModel copy({String? name, String? jsonRaw, String? jsonProcess}) {
+    return EnvModel(
+      name: name ?? this.name,
+      jsonRaw: jsonRaw ?? this.jsonRaw,
+      jsonProcess: jsonProcess ?? this.jsonProcess,
+    );
   }
 }
