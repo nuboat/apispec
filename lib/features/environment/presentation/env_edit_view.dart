@@ -17,10 +17,9 @@ class EnvEditView extends StatefulWidget {
 
 class _EnvEditViewState extends State<EnvEditView> {
   late final TextEditingController _editor;
+  late String activeEnv;
 
-  void _remove() {
-
-  }
+  void _remove() {}
 
   void _save() {
     if (!widget.envCtrl.activeHasChange()) {
@@ -45,7 +44,10 @@ class _EnvEditViewState extends State<EnvEditView> {
   @override
   void initState() {
     super.initState();
+    print("_editor initial");
+    activeEnv = widget.envCtrl.activeEnv.value.name;
     _editor = TextEditingController();
+    _editor.text = widget.envCtrl.activeEnv.value.jsonProcess;
     _editor.addListener(_onEditorTextChanged);
   }
 
@@ -64,10 +66,10 @@ class _EnvEditViewState extends State<EnvEditView> {
         children: <Widget>[
           actionBar(),
           Obx(() {
-            final String processJson = widget.envCtrl.activeEnv.value.jsonProcess;
-            if (_editor.text != processJson) {
+            if (activeEnv != widget.envCtrl.activeEnv.value.name) {
               _editor.removeListener(_onEditorTextChanged);
-              _editor.text = processJson;
+              activeEnv = widget.envCtrl.activeEnv.value.name;
+              _editor.text = widget.envCtrl.activeEnv.value.jsonProcess;
               _editor.addListener(_onEditorTextChanged);
             }
 
@@ -82,11 +84,7 @@ class _EnvEditViewState extends State<EnvEditView> {
     return Container(
       height: 35,
       color: const Color(0xFF000000),
-      child: Row(children: [
-        btnSave(),
-        const Spacer(),
-        btnDelete(),
-      ]),
+      child: Row(children: [btnSave(), const Spacer(), btnDelete()]),
     );
   }
 
@@ -104,18 +102,13 @@ class _EnvEditViewState extends State<EnvEditView> {
             TextButton(
               child: Align(
                 alignment: Alignment.centerLeft,
-                child: Obx(
-                  () => Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      (widget.envCtrl.activeHasChange()) ? "Save **" : "Save",
-                      style: TextStyle(
-                        color: (widget.envCtrl.activeHasChange())
-                            ? Colors.redAccent
-                            : Colors.white,
-                        fontSize: 13,
-                      ),
-                    ),
+                child: Text(
+                  (widget.envCtrl.activeHasChange()) ? "Save **" : "Save",
+                  style: TextStyle(
+                    color: (widget.envCtrl.activeHasChange())
+                        ? Colors.redAccent
+                        : Colors.white,
+                    fontSize: 13,
                   ),
                 ),
               ),
@@ -162,6 +155,6 @@ class _EnvEditViewState extends State<EnvEditView> {
     if (_editor.text != widget.envCtrl.activeEnv.value.jsonProcess) {
       widget.envCtrl.saveBuffer(_editor.text);
     }
+    setState(() {});
   }
-
 }

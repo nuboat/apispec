@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:apispec/core/common/date_facade.dart' as d;
 import 'package:apispec/core/data/api_facade.dart' as a;
 import 'package:apispec/core/data/base.dart' as b;
+import 'package:apispec/define.dart' as d;
 import 'package:apispec/features/home/presentation/home_screen.dart';
+import 'package:apispec/global.dart' as g;
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -28,15 +30,27 @@ class _AuthenScreenState extends State<AuthenScreen> {
       b.application = "Personal";
       b.folder = "default";
 
-      if (!File('$path/initiated.txt').existsSync()) {
-        final file = File('$path/initiated.txt');
+      if (!File("$path/initiated.txt").existsSync()) {
+        final file = File("$path/initiated.txt");
         file.writeAsString("Initialed: ${d.nowInStr()}\n");
         file.writeAsStringSync("Version: 1.0", flush: true);
 
-        Directory(a.workPath())
+        Directory("${a.workPath()}/build_info")
             .createSync(recursive: true);
-        File('${a.workPath()}/build_info.rest')
-            .writeAsStringSync(_buildInfo, flush: true);
+        File("${a.workPath()}/${d.request}")
+            .writeAsStringSync(g.buildInfo, flush: true);
+        File("${a.workPath()}/${d.response}")
+            .writeAsStringSync("", flush: true);
+        File("${a.workPath()}/${d.pre}")
+            .writeAsStringSync("", flush: true);
+        File("${a.workPath()}/${d.post}")
+            .writeAsStringSync("", flush: true);
+        File("${a.workPath()}/${d.spec}")
+            .writeAsStringSync("", flush: true);
+        File("${a.workPath()}/${d.doc}")
+            .writeAsStringSync("", flush: true);
+        File("${a.workPath()}/${d.config}")
+            .writeAsStringSync("", flush: true);
       }
     });
 
@@ -145,14 +159,4 @@ class _AuthenScreenState extends State<AuthenScreen> {
     );
   }
 
-  final String _buildInfo = """
-POST https://api-nocode.beid.io/build_info
-# Header
-Accept-Charset: UTF-8
-Accept-Encoding: zstd, br, gzip
-
-# Body
-
-# End
-  """;
 }

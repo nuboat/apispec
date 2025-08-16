@@ -78,12 +78,8 @@ class EnvController extends GetxController {
   }
 
   EnvModel _loadEnv(String name) {
-    return EnvModel(
-        name: name,
-        jsonRaw: f.readEnv(name)
-    );
+    return EnvModel(name: name, jsonRaw: f.readEnv(name));
   }
-
 }
 
 class EnvModel {
@@ -92,15 +88,12 @@ class EnvModel {
   late final String jsonProcess;
 
   bool hasChange() {
-    return jsonRaw.trim() != jsonProcess.trim();
+    final x = jsonRaw.trim() != jsonProcess.trim();
+    return x;
   }
 
-  EnvModel({
-    required this.name,
-    required this.jsonRaw,
-    String? jsonProcess,
-  }) {
-    this.jsonProcess = jsonRaw;
+  EnvModel({required this.name, required this.jsonRaw, String? jsonProcess}) {
+    this.jsonProcess = jsonProcess ?? jsonRaw;
   }
 
   EnvModel copy({String? name, String? jsonRaw, String? jsonProcess}) {
