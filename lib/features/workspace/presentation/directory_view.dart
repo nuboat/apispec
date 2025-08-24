@@ -1,4 +1,6 @@
 import 'package:apispec/features/workspace/controller/workspace_controller.dart';
+import 'package:apispec/features/workspace/presentation/api_create_dialog.dart';
+import 'package:apispec/features/workspace/presentation/directory_create_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,12 +15,22 @@ class APIListView extends StatefulWidget {
 
 class _APIListViewState extends State<APIListView> {
 
-  void _newDirectory() {
-    //
+  void _createDirectory() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return DirectoryCreateDialog(workspaceCtrl: widget.workspaceCtrl,);
+      },
+    );
   }
 
-  void _newAPI() {
-    //
+  void _createAPI() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return APICreateDialog(workspaceCtrl: widget.workspaceCtrl,);
+      },
+    );
   }
 
   void _changeFolder(String name) {
@@ -62,7 +74,7 @@ class _APIListViewState extends State<APIListView> {
                         child: Text(
                           apiName,
                           style: isSelected
-                              ? TextStyle(color: Colors.green, fontSize: 16)
+                              ? TextStyle(color: Colors.green, fontSize: 18)
                               : TextStyle(color: Colors.white, fontSize: 16),
                         ),
                       ),
@@ -87,12 +99,12 @@ class _APIListViewState extends State<APIListView> {
           SizedBox(width: 8),
           IconButton(
             icon: Icon(Icons.create_new_folder, size: 24),
-            onPressed: _newDirectory,
+            onPressed: _createDirectory,
           ),
           SizedBox(width: 8),
           DropdownButton<String>(
             value: widget.workspaceCtrl.activeFolder.value,
-            style: const TextStyle(color: Colors.green, fontSize: 16),
+            style: const TextStyle(color: Colors.white, fontSize: 18),
             underline: Container(height: 0),
             onChanged: (String? value) {
               _changeFolder(value!);
@@ -104,7 +116,7 @@ class _APIListViewState extends State<APIListView> {
             }).toList(),
           ),
           const Spacer(),
-          IconButton(icon: Icon(Icons.post_add, size: 24), onPressed: _newAPI),
+          IconButton(icon: Icon(Icons.post_add, size: 24), onPressed: _createAPI),
           SizedBox(width: 8),
         ],
       ),

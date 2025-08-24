@@ -2,7 +2,7 @@ library;
 
 import 'dart:io';
 
-import 'package:apispec/core/data/base.dart' as b;
+import 'package:apispec/core/context.dart' as b;
 
 String _folderPath() {
   return "${b.home}/applications/${b.application}/api/";
@@ -17,7 +17,12 @@ bool hasAPI(String folder, String name) {
 }
 
 String readAPI(String folder, String name, String part) {
-  return File('${_folderPath()}$folder/$name/$part').readAsStringSync();
+  try {
+    return File('${_folderPath()}$folder/$name/$part').readAsStringSync();
+  } catch (e) {
+    return "";
+  }
+
 }
 
 File readResponse(String name) {

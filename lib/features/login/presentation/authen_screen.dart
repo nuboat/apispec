@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:apispec/core/common/date_facade.dart' as d;
 import 'package:apispec/core/data/api_facade.dart' as a;
-import 'package:apispec/core/data/base.dart' as b;
+import 'package:apispec/core/context.dart' as b;
 import 'package:apispec/define.dart' as d;
 import 'package:apispec/features/home/presentation/home_screen.dart';
 import 'package:apispec/global.dart' as g;
@@ -38,7 +38,7 @@ class _AuthenScreenState extends State<AuthenScreen> {
         Directory("${a.workPath()}/build_info")
             .createSync(recursive: true);
         File("${a.workPath()}/${d.request}")
-            .writeAsStringSync(g.buildInfo, flush: true);
+            .writeAsStringSync(g.sampleRequest, flush: true);
         File("${a.workPath()}/${d.response}")
             .writeAsStringSync("", flush: true);
         File("${a.workPath()}/${d.pre}")

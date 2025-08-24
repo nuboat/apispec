@@ -1,16 +1,16 @@
-import 'package:apispec/features/environment/controller/env_controller.dart';
+import 'package:apispec/features/workspace/controller/workspace_controller.dart';
 import 'package:flutter/material.dart';
 
-class EnvCreateDialog extends StatefulWidget {
-  const EnvCreateDialog({super.key, required this.envCtrl});
+class DirectoryCreateDialog extends StatefulWidget {
+  const DirectoryCreateDialog({super.key, required this.workspaceCtrl});
 
-  final EnvController envCtrl;
+  final WorkspaceController workspaceCtrl;
 
   @override
-  State<EnvCreateDialog> createState() => _EnvCreateDialogState();
+  State<DirectoryCreateDialog> createState() => _DirectoryCreateDialogState();
 }
 
-class _EnvCreateDialogState extends State<EnvCreateDialog> {
+class _DirectoryCreateDialogState extends State<DirectoryCreateDialog> {
 
   final TextEditingController _textController = TextEditingController();
 
@@ -24,14 +24,14 @@ class _EnvCreateDialogState extends State<EnvCreateDialog> {
   Widget build(BuildContext context) {
 
     return AlertDialog(
-      title: Text("Create New Environment"),
+      title: Text("Create Directory"),
       content: SingleChildScrollView(
         child: ListBody(
           children: <Widget>[
             TextField(
               controller: _textController,
               decoration: InputDecoration(
-                hintText: "Enter Environment name",
+                hintText: "Enter directory name",
                 border: OutlineInputBorder(),
               ),
             ),
@@ -50,12 +50,13 @@ class _EnvCreateDialogState extends State<EnvCreateDialog> {
           child: Text("Create"),
           onPressed: () {
             if (_textController.text.isNotEmpty) {
-              widget.envCtrl.createEnv(_textController.text);
+              // TODO
+              // widget.envCtrl.createEnv(_textController.text);
               Navigator.of(context).pop();
               _textController.clear();
             } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text("Environment name cannot be empty")),
+                SnackBar(content: Text("Directory name cannot be empty")),
               );
             }
           },

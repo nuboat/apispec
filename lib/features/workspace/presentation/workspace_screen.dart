@@ -1,7 +1,7 @@
 import 'package:apispec/features/environment/controller/env_controller.dart';
 import 'package:apispec/features/workspace/controller/workspace_controller.dart';
-import 'package:apispec/features/workspace/presentation/api_exec_view.dart';
-import 'package:apispec/features/workspace/presentation/api_list_view.dart';
+import 'package:apispec/features/workspace/presentation/api_view.dart';
+import 'package:apispec/features/workspace/presentation/directory_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 

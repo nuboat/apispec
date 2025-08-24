@@ -2,7 +2,7 @@ library;
 
 import 'dart:io';
 
-import 'package:apispec/core/data/base.dart' as b;
+import 'package:apispec/core/context.dart' as b;
 
 String _folderPath() {
   return "${b.home}/applications/${b.application}/env";

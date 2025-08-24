@@ -1,7 +1,6 @@
 import 'package:apispec/features/environment/controller/env_controller.dart';
 import 'package:apispec/features/workspace/controller/workspace_controller.dart';
 import 'package:apispec/global.dart' as g;
-import 'package:apispec/mock.dart' as m;
 import 'package:flutter/material.dart';
 
 class APIView extends StatefulWidget {
@@ -102,7 +101,7 @@ class _APIViewState extends State<APIView> {
           fontSize: 13,
         ),
         decoration: const InputDecoration(border: InputBorder.none),
-        controller: TextEditingController(text: m.sampleResponse),
+        controller: TextEditingController(text: "TODO"),
       ),
     );
   }
@@ -120,7 +119,7 @@ class _APIViewState extends State<APIView> {
               fontSize: 13,
             ),
             decoration: const InputDecoration(border: InputBorder.none),
-            controller: TextEditingController(text: m.sampleCode),
+            controller: TextEditingController(text: "TODO"),
           ),
         ),
         textFooter(),
