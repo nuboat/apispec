@@ -2,6 +2,7 @@ import 'package:apispec/features/environment/controller/env_controller.dart';
 import 'package:apispec/features/workspace/controller/workspace_controller.dart';
 import 'package:apispec/global.dart' as g;
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class APIView extends StatefulWidget {
   const APIView({super.key, required this.workspaceCtrl, required this.envCtrl});
@@ -14,6 +15,10 @@ class APIView extends StatefulWidget {
 }
 
 class _APIViewState extends State<APIView> {
+
+  late final TextEditingController _editorAPI;
+  late String _activeAPI;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,14 +26,23 @@ class _APIViewState extends State<APIView> {
       child: Column(
         children: <Widget>[
           actionBar(),
-          Expanded(
-            child: Row(
-              children: <Widget>[
-                Expanded(child: tabBarAPI()),
-                responsePreview(),
-              ],
-            ),
-          ),
+          Obx(() {
+            if (_activeAPI != widget.workspaceCtrl.activeAPI.value.name) {
+              _editorAPI.removeListener(_onEditorAPITextChanged);
+              _activeAPI = widget.envCtrl.activeEnv.value.name;
+              _editorAPI.text = widget.envCtrl.activeEnv.value.jsonProcess;
+              _editorAPI.addListener(_onEditorAPITextChanged);
+            }
+
+            return Expanded(
+              child: Row(
+                children: <Widget>[
+                  Expanded(child: tabBarAPI()),
+                  responsePreview(),
+                ],
+              ),
+            );
+          }),
         ],
       ),
     );
@@ -40,6 +54,7 @@ class _APIViewState extends State<APIView> {
       color: const Color(0xFF000000),
       child: Row(
         children: [
+          btnSave(),
           btnSend(),
           const Spacer(),
           switchEditMode(),
@@ -101,7 +116,7 @@ class _APIViewState extends State<APIView> {
           fontSize: 13,
         ),
         decoration: const InputDecoration(border: InputBorder.none),
-        controller: TextEditingController(text: "TODO"),
+        controller: _editorAPI,
       ),
     );
   }
@@ -119,7 +134,7 @@ class _APIViewState extends State<APIView> {
               fontSize: 13,
             ),
             decoration: const InputDecoration(border: InputBorder.none),
-            controller: TextEditingController(text: "TODO"),
+            controller: _editorAPI,
           ),
         ),
         textFooter(),
@@ -253,19 +268,48 @@ class _APIViewState extends State<APIView> {
     );
   }
 
+  Widget btnSave() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
+      color: const Color(0xFF1E1E1E),
+      child: Center(
+        child: Row(
+          children: [
+            IconButton(
+              icon: Icon(Icons.save, color: Colors.blue, size: 24),
+              onPressed: _save,
+            ),
+            TextButton(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  (widget.envCtrl.activeHasChange()) ? "Save **" : "Save",
+                  style: TextStyle(
+                    color: (widget.envCtrl.activeHasChange())
+                        ? Colors.redAccent
+                        : Colors.white,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+              onPressed: () => _save(),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget btnSend() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       // color: const Color(0xFF1E1E1E),
       child: Center(
         child: Row(
           children: [
-            TextButton(
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: Icon(Icons.arrow_circle_right, color: Colors.blue, size: 24),
-              ),
-              onPressed: () => "",
+            IconButton(
+              icon: Icon(Icons.send, color: Colors.blue, size: 24),
+              onPressed: _send,
             ),
           ],
         ),
@@ -340,5 +384,29 @@ class _APIViewState extends State<APIView> {
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _activeAPI = widget.workspaceCtrl.activeAPI.value.name;
+    _editorAPI = TextEditingController();
+    _editorAPI.text = widget.workspaceCtrl.activeAPI.value.requestRaw;
+    _editorAPI.addListener(_onEditorAPITextChanged);
+  }
+
+  void _send() {
+
+  }
+
+  void _save() {
+
+  }
+
+  void _onEditorAPITextChanged() {
+    if (_editorAPI.text != widget.envCtrl.activeEnv.value.jsonProcess) {
+      widget.workspaceCtrl.saveAPIBuffer(_editorAPI.text);
+    }
+    setState(() {});
   }
 }

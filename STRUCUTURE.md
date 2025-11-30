@@ -6,10 +6,10 @@ $HOME/Library/Containers/cc.peepapat.apispec/Data/Documents/applications/Persona
 
 ## Data 
 /applications
-    /[application name], personal 
+    /[application name], example Personal 
         /api
-            /[collection name], default
-                /[apiname], build_info
+            /[collection name], example default
+                /[apiname], example build_info
                     /request.rest
                     /response.txt
                     /config.json

@@ -13,9 +13,10 @@ class WorkspaceController extends GetxController {
   final folders = <String>[].obs;
   final Map<String, List<String>> _folderBuffer = HashMap();
 
-  late final Rx<APIModel> activeAPI;
-  late final RxString activeEnv;
   late final RxString activeFolder;
+  late final Rx<APIModel> activeAPI;
+
+  late final RxString activeEnv;
 
   void changeFolder(String folder) {
     activeFolder.value = folder;
@@ -24,6 +25,11 @@ class WorkspaceController extends GetxController {
     } else {
       _loadAPIs(folder);
     }
+  }
+
+  void saveAPIBuffer(String requestProcess) {
+    activeAPI.value = activeAPI.value.copy(requestProcess: requestProcess);
+    _apiBuffer[activeAPI.value.name] = activeAPI.value;
   }
 
   void changeAPI(String api) {

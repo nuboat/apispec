@@ -17,7 +17,7 @@ class EnvEditView extends StatefulWidget {
 
 class _EnvEditViewState extends State<EnvEditView> {
   late final TextEditingController _editor;
-  late String activeEnv;
+  late String _activeEnv;
 
   void _remove() {}
 
@@ -42,23 +42,6 @@ class _EnvEditViewState extends State<EnvEditView> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    print("_editor initial");
-    activeEnv = widget.envCtrl.activeEnv.value.name;
-    _editor = TextEditingController();
-    _editor.text = widget.envCtrl.activeEnv.value.jsonProcess;
-    _editor.addListener(_onEditorTextChanged);
-  }
-
-  @override
-  void dispose() {
-    _editor.removeListener(_onEditorTextChanged);
-    _editor.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Container(
       color: const Color(0xFF666666),
@@ -66,9 +49,9 @@ class _EnvEditViewState extends State<EnvEditView> {
         children: <Widget>[
           actionBar(),
           Obx(() {
-            if (activeEnv != widget.envCtrl.activeEnv.value.name) {
+            if (_activeEnv != widget.envCtrl.activeEnv.value.name) {
               _editor.removeListener(_onEditorTextChanged);
-              activeEnv = widget.envCtrl.activeEnv.value.name;
+              _activeEnv = widget.envCtrl.activeEnv.value.name;
               _editor.text = widget.envCtrl.activeEnv.value.jsonProcess;
               _editor.addListener(_onEditorTextChanged);
             }
@@ -149,6 +132,23 @@ class _EnvEditViewState extends State<EnvEditView> {
       decoration: const InputDecoration(border: InputBorder.none),
       controller: _editor,
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print("_editor initial");
+    _activeEnv = widget.envCtrl.activeEnv.value.name;
+    _editor = TextEditingController();
+    _editor.text = widget.envCtrl.activeEnv.value.jsonProcess;
+    _editor.addListener(_onEditorTextChanged);
+  }
+
+  @override
+  void dispose() {
+    _editor.removeListener(_onEditorTextChanged);
+    _editor.dispose();
+    super.dispose();
   }
 
   void _onEditorTextChanged() {
