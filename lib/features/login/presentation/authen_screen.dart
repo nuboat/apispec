@@ -31,26 +31,12 @@ class _AuthenScreenState extends State<AuthenScreen> {
       b.folder = "default";
 
       if (!File("$path/initiated.txt").existsSync()) {
+        a.createCollection("default");
+        a.createAPI("default", "sample_api");
+
         final file = File("$path/initiated.txt");
         file.writeAsString("Initialed: ${d.nowInStr()}\n");
         file.writeAsStringSync("Version: 1.0", flush: true);
-
-        Directory("${a.workPath()}/build_info")
-            .createSync(recursive: true);
-        File("${a.workPath()}/${d.request}")
-            .writeAsStringSync(g.sampleRequest, flush: true);
-        File("${a.workPath()}/${d.response}")
-            .writeAsStringSync("", flush: true);
-        File("${a.workPath()}/${d.pre}")
-            .writeAsStringSync("", flush: true);
-        File("${a.workPath()}/${d.post}")
-            .writeAsStringSync("", flush: true);
-        File("${a.workPath()}/${d.spec}")
-            .writeAsStringSync("", flush: true);
-        File("${a.workPath()}/${d.doc}")
-            .writeAsStringSync("", flush: true);
-        File("${a.workPath()}/${d.config}")
-            .writeAsStringSync("", flush: true);
       }
     });
 
