@@ -12,6 +12,7 @@ void _ensureDirectoryExists() {
   final dir = Directory(_folderPath());
   if (!dir.existsSync()) {
     dir.createSync(recursive: true);
+    createFile("default");
   }
 }
 
@@ -28,7 +29,6 @@ File loadFile(String name) {
 }
 
 void createFile(String name) {
-  _ensureDirectoryExists();
   final file = loadFile(name);
   try {
     file.writeAsStringSync("""
@@ -40,7 +40,6 @@ void createFile(String name) {
 }
 
 Future<File> writeDataToFile(String name, String data) async {
-  _ensureDirectoryExists();
   final file = loadFile(name);
   try {
     return await file.writeAsString(data);
