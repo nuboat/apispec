@@ -8,6 +8,13 @@ String _folderPath() {
   return "${b.home}/applications/${b.application}/env";
 }
 
+void _ensureDirectoryExists() {
+  final dir = Directory(_folderPath());
+  if (!dir.existsSync()) {
+    dir.createSync(recursive: true);
+  }
+}
+
 bool hasEnv(String name) {
   return loadFile(name).existsSync();
 }
@@ -21,6 +28,7 @@ File loadFile(String name) {
 }
 
 void createFile(String name) {
+  _ensureDirectoryExists();
   final file = loadFile(name);
   try {
     file.writeAsStringSync("""
@@ -32,6 +40,7 @@ void createFile(String name) {
 }
 
 Future<File> writeDataToFile(String name, String data) async {
+  _ensureDirectoryExists();
   final file = loadFile(name);
   try {
     return await file.writeAsString(data);
@@ -41,7 +50,6 @@ Future<File> writeDataToFile(String name, String data) async {
 }
 
 List<FileSystemEntity> listEnv() {
-  return Directory(
-    _folderPath(),
-  ).listSync().where((f) => f.path.toLowerCase().endsWith(".json")).toList();
+  _ensureDirectoryExists();
+  return Directory(_folderPath()).listSync().where((f) => f.path.toLowerCase().endsWith(".json")).toList();
 }
