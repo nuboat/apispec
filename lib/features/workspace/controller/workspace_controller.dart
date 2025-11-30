@@ -5,6 +5,7 @@ import 'package:apispec/define.dart' as d;
 import 'package:apispec/features/workspace/controller/api_model.dart';
 import "package:get/get.dart";
 import 'package:path/path.dart';
+import 'package:apispec/core/data/api_facade.dart' as a;
 
 class WorkspaceController extends GetxController {
   final apis = <String>[].obs;
@@ -42,6 +43,12 @@ class WorkspaceController extends GetxController {
 
   bool isActiveAPI(String name) {
     return activeAPI.value.name == name;
+  }
+
+  void createAPI(String apiName) {
+    a.createAPI(activeFolder.value, apiName);
+    _loadAPIs(activeFolder.value);
+    changeAPI(apiName);
   }
 
   @override

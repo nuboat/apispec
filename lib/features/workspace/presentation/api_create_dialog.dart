@@ -1,6 +1,5 @@
 import 'package:apispec/features/workspace/controller/workspace_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:apispec/core/data/api_facade.dart' as a;
 
 class APICreateDialog extends StatefulWidget {
   const APICreateDialog({super.key, required this.workspaceCtrl});
@@ -51,14 +50,7 @@ class _APICreateDialogState extends State<APICreateDialog> {
           child: Text("Create"),
           onPressed: () {
             if (_textController.text.isNotEmpty) {
-              // TODO
-              print("activeFolder: ${widget.workspaceCtrl.activeFolder}");
-              final collectionName = widget.workspaceCtrl.activeFolder;
-              final apiName = _textController.text;
-              a.createAPI(collectionName.value, apiName);
-              // widget.workspaceCtrl.loadFolders();
-              // widget.workspaceCtrl.createEnv(_textController.text);
-              // a.createAPI(collectionName, apiName)
+              widget.workspaceCtrl.createAPI(_textController.text);
               Navigator.of(context).pop();
               _textController.clear();
             } else {
