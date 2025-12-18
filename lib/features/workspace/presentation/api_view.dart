@@ -255,7 +255,7 @@ class _APIViewState extends State<APIView> {
           Switch(
             // This bool value toggles the switch.
             value: plaintextMode,
-            activeColor: Colors.teal,
+            activeThumbColor: Colors.teal,
             onChanged: (bool value) {
               // This is called when the user toggles the switch.
               setState(() {
